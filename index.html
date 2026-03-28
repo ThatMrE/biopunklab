@@ -1,317 +1,512 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Biopunk Lab â€” Where Biology Gets Weird</title>
-  <meta name="description" content="Biopunk Lab is a community DIY biology space at the intersection of science, punk culture, and open experimentation.">
+  <title>biopunk</title>
+  <meta name="description" content="Biopunk — accessible biotech research, community lab, and open science in San Francisco.">
   <style>
-    :root {
-      --purple: #cc00ff;
-      --purple-dim: #8800aa;
-      --neon-green: #39ff14;
-      --bg: #060010;
-      --bg2: #0e0020;
-      --bg3: #160030;
-      --text: #f0e6ff;
-      --muted: rgba(240,230,255,0.55);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
 
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0f0a;
+      color: #e8ede8;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* â”€â”€ NAV â”€â”€ */
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 2rem;
-      background: rgba(6,0,16,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(204,0,255,0.15);
+      padding: 1.25rem 3rem;
+      background: rgba(10, 15, 10, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .nav-logo img {
-      height: 36px;
-      filter: brightness(1.1);
+
+    .nav-wordmark {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: lowercase;
+      color: #e8ede8;
     }
+
     .nav-links {
       display: flex;
-      gap: 2rem;
+      align-items: center;
+      gap: 2.5rem;
       list-style: none;
     }
+
     .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: rgba(232,237,232,0.6);
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--purple); }
+    .nav-links a:hover { color: #e8ede8; }
 
-    /* â”€â”€ HERO â”€â”€ */
+    .nav-links .nav-cta {
+      background: #e8ede8;
+      color: #0a0f0a;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .nav-links .nav-cta:hover { background: #fff; color: #0a0f0a; }
+
+    /* ── HERO ── */
     .hero {
+      position: relative;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 6rem 2rem 4rem;
-      position: relative;
+      padding: 8rem 2rem 6rem;
       overflow: hidden;
     }
+
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('images/art-rock-and-roll.png');
+      background-image: url('images/bg-microscopy.jpg');
       background-size: cover;
       background-position: center;
-      opacity: 0.18;
-      filter: saturate(1.5);
+      filter: saturate(0.7) brightness(0.45);
     }
-    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+
+    /* green vignette overlay like the Squarespace site */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(5,20,5,0.85) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.5);
+      margin-bottom: 1.5rem;
+    }
+
     .hero-logo {
-      width: min(280px, 70vw);
-      margin-bottom: 2rem;
-      filter: drop-shadow(0 0 24px rgba(204,0,255,0.6));
+      width: min(240px, 60vw);
+      margin: 0 auto 2rem;
+      filter: brightness(1.15) drop-shadow(0 0 30px rgba(80,200,80,0.25));
     }
+
     .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
-      font-weight: 900;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 300;
       letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #cc00ff, #ff66ff, #cc00ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      line-height: 1.05;
+      margin-bottom: 0.3rem;
+      color: #e8ede8;
     }
-    .hero-tagline {
-      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-      color: var(--muted);
-      font-style: italic;
+
+    .hero h1 span {
+      display: block;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(232,237,232,0.55);
+      margin-top: 1.5rem;
       margin-bottom: 2.5rem;
-      line-height: 1.5;
+      line-height: 1.6;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .hero-cta {
-      display: inline-flex;
+
+    .hero-actions {
+      display: flex;
       gap: 1rem;
-      flex-wrap: wrap;
       justify-content: center;
+      flex-wrap: wrap;
     }
+
     .btn {
       display: inline-block;
-      padding: 0.75rem 2rem;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
+      padding: 0.8rem 2rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      text-decoration: none;
       transition: all 0.2s;
       cursor: pointer;
-      border: none;
-    }
-    .btn-primary {
-      background: var(--purple);
-      color: #fff;
-      box-shadow: 0 0 20px rgba(204,0,255,0.4);
-    }
-    .btn-primary:hover {
-      background: #dd22ff;
-      box-shadow: 0 0 32px rgba(204,0,255,0.7);
-      transform: translateY(-1px);
-    }
-    .btn-outline {
-      background: transparent;
-      color: var(--purple);
-      border: 1.5px solid var(--purple);
-    }
-    .btn-outline:hover {
-      background: rgba(204,0,255,0.1);
-      transform: translateY(-1px);
     }
 
-    /* â”€â”€ SECTION SHELL â”€â”€ */
-    section {
-      padding: 6rem 2rem;
-      max-width: 1100px;
+    .btn-light {
+      background: #e8ede8;
+      color: #0a0f0a;
+    }
+    .btn-light:hover { background: #fff; }
+
+    .btn-ghost {
+      background: transparent;
+      color: #e8ede8;
+      border: 1px solid rgba(232,237,232,0.35);
+    }
+    .btn-ghost:hover { border-color: rgba(232,237,232,0.7); background: rgba(232,237,232,0.05); }
+
+    /* ── SECTION DIVIDER ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+
+    /* ── GET INVOLVED — 3-col cards (Squarespace style) ── */
+    .get-involved {
+      position: relative;
+      background-image: url('images/bg-microscopy.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .get-involved::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 14, 8, 0.72);
+    }
+
+    .get-involved-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
       margin: 0 auto;
+      padding: 8vmax 3rem;
     }
-    .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
+
+    .section-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--purple);
-      margin-bottom: 0.5rem;
+      color: rgba(232,237,232,0.45);
+      margin-bottom: 0.6rem;
     }
-    .section-title {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
+
+    .section-heading {
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      color: #e8ede8;
+      margin-bottom: 4rem;
+    }
+    .section-heading strong { font-weight: 700; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+    }
+
+    .card { display: flex; flex-direction: column; }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      margin-bottom: 1.5rem;
+    }
+
+    .card h3 {
+      font-size: 1.6rem;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+      color: #e8ede8;
       line-height: 1.2;
     }
-    .section-body {
-      font-size: 1.05rem;
-      color: var(--muted);
-      line-height: 1.75;
-      max-width: 640px;
+
+    .card p {
+      font-size: 1rem;
+      color: rgba(232,237,232,0.6);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 1.25rem;
     }
 
-    /* â”€â”€ ABOUT â”€â”€ */
-    .about-grid {
+    .card-btn {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #e8ede8;
+      border-bottom: 1px solid rgba(232,237,232,0.35);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, color 0.2s;
+      align-self: flex-start;
+    }
+    .card-btn:hover { border-color: #e8ede8; color: #fff; }
+
+    /* ── DARK BAND — about text ── */
+    .about-band {
+      background: #070c07;
+      padding: 7rem 3rem;
+    }
+
+    .about-band-inner {
+      max-width: 1200px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      gap: 5rem;
       align-items: center;
-      margin-top: 3rem;
     }
-    .about-photo {
-      border-radius: 8px;
-      overflow: hidden;
+
+    .about-band h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      color: #e8ede8;
+      margin-bottom: 1.5rem;
+    }
+    .about-band h2 strong { font-weight: 700; }
+
+    .about-band p {
+      font-size: 1rem;
+      color: rgba(232,237,232,0.6);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .about-img {
+      width: 100%;
       aspect-ratio: 4/3;
-      border: 1px solid rgba(204,0,255,0.2);
-      box-shadow: 0 0 40px rgba(204,0,255,0.1);
-    }
-    .about-photo img {
-      width: 100%;
-      height: 100%;
       object-fit: cover;
-      display: block;
+      filter: brightness(0.9);
     }
-    .about-text { display: flex; flex-direction: column; gap: 1.25rem; }
-    .about-text p { color: var(--muted); line-height: 1.75; }
 
-    /* â”€â”€ ART GALLERY â”€â”€ */
-    .art-section { background: var(--bg2); margin: 0; max-width: 100%; padding: 6rem 2rem; }
-    .art-inner { max-width: 1100px; margin: 0 auto; }
-    .art-grid {
+    /* ── VALUES STRIP ── */
+    .values-strip {
+      background: #0d120d;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 5rem 3rem;
+    }
+
+    .values-strip-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .values-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
       margin-top: 3rem;
     }
-    .art-card {
-      border-radius: 8px;
-      overflow: hidden;
-      aspect-ratio: 1;
-      border: 1px solid rgba(204,0,255,0.15);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-    .art-card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 30px rgba(204,0,255,0.3);
-    }
-    .art-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+
+    .value-item {
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 1.5rem;
     }
 
-    /* â”€â”€ LAB PHOTOS â”€â”€ */
-    .lab-grid {
+    .value-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+
+    .value-item h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #e8ede8;
+      margin-bottom: 0.5rem;
+    }
+
+    .value-item p {
+      font-size: 0.9rem;
+      color: rgba(232,237,232,0.5);
+      line-height: 1.6;
+    }
+
+    /* ── ART GALLERY ── */
+    .gallery-section {
+      background: #070c07;
+      padding: 7rem 3rem;
+    }
+
+    .gallery-inner { max-width: 1200px; margin: 0 auto; }
+
+    .gallery-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
       margin-top: 3rem;
     }
-    .lab-card {
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid rgba(204,0,255,0.15);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .lab-card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 24px rgba(204,0,255,0.25);
-    }
-    .lab-card img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      display: block;
-    }
-    .lab-card.wide { grid-column: span 2; }
-    .lab-card.wide img { aspect-ratio: 16/9; }
 
-    /* â”€â”€ VALUES â”€â”€ */
-    .values-grid {
+    .gallery-item {
+      overflow: hidden;
+      aspect-ratio: 1;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.3s;
+      filter: saturate(0.85);
+    }
+    .gallery-item:hover img { transform: scale(1.04); filter: saturate(1.1); }
+
+    /* ── LAB PHOTOS ── */
+    .lab-section {
+      background: #0a0f0a;
+      padding: 7rem 3rem;
+    }
+
+    .lab-inner { max-width: 1200px; margin: 0 auto; }
+
+    .lab-masonry {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 1rem;
       margin-top: 3rem;
     }
-    .value-card {
-      background: var(--bg2);
-      border: 1px solid rgba(204,0,255,0.12);
-      border-radius: 8px;
-      padding: 1.75rem;
-      transition: border-color 0.3s;
-    }
-    .value-card:hover { border-color: rgba(204,0,255,0.4); }
-    .value-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-    .value-card h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--purple);
-    }
-    .value-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
 
-    /* â”€â”€ CTA BAND â”€â”€ */
-    .cta-band {
-      background: linear-gradient(135deg, #1a0030, #2a0050);
-      border-top: 1px solid rgba(204,0,255,0.2);
-      border-bottom: 1px solid rgba(204,0,255,0.2);
-      padding: 5rem 2rem;
+    .lab-item { overflow: hidden; }
+    .lab-item.span2 { grid-column: span 2; }
+
+    .lab-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      aspect-ratio: 4/3;
+      transition: transform 0.5s ease;
+      filter: brightness(0.92);
+    }
+    .lab-item.span2 img { aspect-ratio: 16/9; }
+    .lab-item:hover img { transform: scale(1.03); filter: brightness(1); }
+
+    /* ── FOOTER CTA ── */
+    .footer-cta {
+      background: #0d120d;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 7rem 3rem;
       text-align: center;
     }
-    .cta-band h2 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
+
+    .footer-cta h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: #e8ede8;
       margin-bottom: 1rem;
     }
-    .cta-band p { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; }
+    .footer-cta h2 strong { font-weight: 700; }
 
-    /* â”€â”€ FOOTER â”€â”€ */
+    .footer-cta p {
+      color: rgba(232,237,232,0.5);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.65;
+    }
+
+    .footer-cta-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
     footer {
-      text-align: center;
-      padding: 2.5rem 2rem;
-      border-top: 1px solid rgba(204,0,255,0.1);
-      color: var(--muted);
-      font-size: 0.85rem;
+      background: #060b06;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
-    footer a { color: var(--purple); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
 
-    /* â”€â”€ RESPONSIVE â”€â”€ */
-    @media (max-width: 700px) {
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .lab-grid { grid-template-columns: 1fr 1fr; }
-      .lab-card.wide { grid-column: span 1; }
-      .lab-card.wide img { aspect-ratio: 4/3; }
-      nav { padding: 0.75rem 1rem; }
-      .nav-links { gap: 1rem; }
-      .nav-links a { font-size: 0.75rem; }
+    footer .footer-brand {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: lowercase;
+      color: rgba(232,237,232,0.5);
     }
-    @media (max-width: 480px) {
-      .lab-grid { grid-template-columns: 1fr; }
-      .lab-card.wide { grid-column: span 1; }
+
+    footer .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    footer .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.35);
+      transition: color 0.2s;
+    }
+    footer .footer-links a:hover { color: rgba(232,237,232,0.7); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+
+      .cards-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-band-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .lab-masonry { grid-template-columns: repeat(2, 1fr); }
+      .lab-item.span2 { grid-column: span 2; }
+
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0.9rem 1rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links li:not(:last-child) { display: none; }
+      .get-involved-inner, .about-band, .values-strip, .gallery-section, .lab-section, .footer-cta { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .lab-masonry { grid-template-columns: 1fr; }
+      .lab-item.span2 { grid-column: span 1; }
+      .lab-item.span2 img { aspect-ratio: 4/3; }
     }
   </style>
 </head>
@@ -319,187 +514,202 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="#top">
-      <img src="images/logo.png" alt="Biopunk Lab">
-    </a>
+    <span class="nav-wordmark">biopunk</span>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#art">Art</a></li>
+      <li><a href="#gallery">Art</a></li>
       <li><a href="#lab">Lab</a></li>
-      <li><a href="#join">Join</a></li>
+      <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events</a></li>
+      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="nav-cta">Join</a></li>
     </ul>
   </nav>
 
   <!-- HERO -->
-  <div id="top" class="hero">
+  <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <img class="hero-logo"
-           src="images/logo.png"
-           alt="Biopunk Lab logo">
-      <h1>Where Biology Gets Weird</h1>
-      <p class="hero-tagline">
-        A community DIY biology lab at the intersection of science,<br>
-        punk culture, and open experimentation.
+      <img class="hero-logo" src="images/logo.png" alt="Biopunk">
+      <p class="hero-eyebrow">San Francisco · Community Biolab</p>
+      <h1>Biopunk Enables<span>Accessible Biotech Research</span></h1>
+      <p class="hero-sub">
+        A community of scientists, entrepreneurs, students, and artists
+        pushing the envelope of the possible — together.
       </p>
-      <div class="hero-cta">
-        <a href="#join" class="btn btn-primary">Get Involved</a>
-        <a href="#about" class="btn btn-outline">Learn More</a>
+      <div class="hero-actions">
+        <a href="https://lu.ma/biopunk" target="_blank" rel="noopener" class="btn btn-light">See Events</a>
+        <a href="#about" class="btn btn-ghost">Learn More</a>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <p class="section-label">Who We Are</p>
-    <h2 class="section-title">Science for Everyone,<br>Rules Optional</h2>
-    <div class="about-grid">
-      <div class="about-photo">
-        <img src="images/lab-biosafety.jpeg"
-             alt="Biopunk Lab members working at biosafety cabinet">
+  <!-- GET INVOLVED — 3-col Squarespace-style -->
+  <section class="get-involved" id="about">
+    <div class="get-involved-inner">
+      <p class="section-eyebrow">Get Involved</p>
+      <h2 class="section-heading">Three ways to be part of Biopunk.</h2>
+
+      <div class="cards-grid">
+
+        <div class="card">
+          <img class="card-img" src="images/card-class.jpg" alt="Biopunk class in the lab">
+          <h3>Take a class.</h3>
+          <p>The Biopunk community members continually teach new classes on emerging topics in biotechnology. Come join us for a starter course or take our annual How to Grow Almost Anything for a full start in genetic engineering.</p>
+          <a href="https://lu.ma/biopunk" target="_blank" rel="noopener" class="card-btn">Get Details →</a>
+        </div>
+
+        <div class="card">
+          <img class="card-img" src="images/card-member.jpg" alt="Members working in the Biopunk lab">
+          <h3>Become a member.</h3>
+          <p>We have an incredible community of brilliant scientists, entrepreneurs, students and artists all pushing the envelope of the possible in our state-of-the-art laboratory in downtown San Francisco.</p>
+          <a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="card-btn">Apply for Membership →</a>
+        </div>
+
+        <div class="card">
+          <img class="card-img" src="images/lab-community-2.jpg" alt="Biopunk community gathering">
+          <h3>Join Us.</h3>
+          <p>Find ways to get involved or sponsor a class for a community member in need. Provide direct support for our science outreach mission. Anything helps!</p>
+          <a href="https://opencollective.com/biopunk" target="_blank" rel="noopener" class="card-btn">Contribute through Open Collective →</a>
+        </div>
+
       </div>
-      <div class="about-text">
-        <p>Biopunk Lab is a hands-on community biology space where curious minds come to build, break, and discover. We believe that access to biotechnology shouldn't be gated by institutions â€” it belongs to everyone.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT BAND -->
+  <section class="about-band">
+    <div class="about-band-inner">
+      <div>
+        <h2>Science for everyone.<br><strong>Rules optional.</strong></h2>
+        <p>Biopunk Lab is a hands-on community biology space where curious minds come to build, break, and discover. We believe that access to biotechnology shouldn't be gated by institutions — it belongs to everyone.</p>
         <p>From CRISPR experiments to fermentation, synthetic biology to bioinformatics, we're building the tools and community to make biology an open discipline.</p>
         <p>We host workshops, open lab nights, and collaborative research projects. If you've ever wanted to do real science outside of a corporate or academic lab, this is where you belong.</p>
-        <a href="#join" class="btn btn-primary" style="margin-top:0.5rem; align-self: flex-start;">Join the Community â†’</a>
+        <br>
+        <a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="btn btn-light" style="margin-top:0.5rem;">Apply for Membership →</a>
+      </div>
+      <div>
+        <img class="about-img" src="images/lab-biosafety.jpeg" alt="Biopunk Lab members working at biosafety cabinet">
       </div>
     </div>
   </section>
 
   <!-- VALUES -->
-  <section style="padding-top: 0;">
-    <div class="values-grid">
-      <div class="value-card">
-        <div class="value-icon">ðŸ§¬</div>
-        <h3>Open Science</h3>
-        <p>Research and protocols shared freely. Knowledge belongs to everyone, not just institutions.</p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">ðŸ”¬</div>
-        <h3>Hands-On Learning</h3>
-        <p>Real bench work with real equipment. Theory only gets you so far â€” pipette in hand is better.</p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">âš¡</div>
-        <h3>DIY Ethos</h3>
-        <p>If it's too expensive, build it. If there's no protocol, write one. Punk means making a way.</p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">ðŸŒ</div>
-        <h3>Community First</h3>
-        <p>A space built by and for curious people. No gatekeeping, no credentials required to start.</p>
+  <section class="values-strip">
+    <div class="values-strip-inner">
+      <p class="section-eyebrow">What We Stand For</p>
+      <h2 class="section-heading" style="margin-bottom:0;">Our ethos.</h2>
+      <div class="values-grid">
+        <div class="value-item">
+          <div class="value-icon">🧬</div>
+          <h4>Open Science</h4>
+          <p>Research and protocols shared freely. Knowledge belongs to everyone, not just institutions.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🔬</div>
+          <h4>Hands-On Learning</h4>
+          <p>Real bench work with real equipment. Theory only gets you so far — pipette in hand is better.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">⚡</div>
+          <h4>DIY Ethos</h4>
+          <p>If it's too expensive, build it. If there's no protocol, write one. Punk means making a way.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🌐</div>
+          <h4>Community First</h4>
+          <p>A space built by and for curious people. No gatekeeping, no credentials required to start.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ART GALLERY -->
-  <div class="art-section" id="art">
-    <div class="art-inner">
-      <p class="section-label">Biopunk Aesthetic</p>
-      <h2 class="section-title">The Art of Rebellion</h2>
-      <p class="section-body">
-        Biology is beautiful, strange, and dangerous. These images capture what we're about â€”
-        the collision of punk counterculture and the cutting edge of life science.
-      </p>
-      <div class="art-grid">
-        <div class="art-card">
-          <img src="images/art-crispr-woman.png"
-               alt="Biopunk art â€” cyberpunk woman with CRISPR syringe" loading="lazy">
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-inner">
+      <p class="section-eyebrow">The Aesthetic</p>
+      <h2 class="section-heading">The art of <strong>rebellion.</strong></h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="images/art-rock-and-roll.png" alt="Biopunk Is the New Rock n Roll" loading="lazy">
         </div>
-        <div class="art-card">
-          <img src="images/art-cyborg-hobo.png"
-               alt="Biopunk art â€” cyberpunk hobo with mechanical arm" loading="lazy">
+        <div class="gallery-item">
+          <img src="images/art-not-dead.png" alt="Biopunk Is Not Dead" loading="lazy">
         </div>
-        <div class="art-card">
-          <img src="images/art-not-dead.png"
-               alt="Biopunk Is Not Dead poster" loading="lazy">
+        <div class="gallery-item">
+          <img src="images/art-crispr-woman.png" alt="Biopunk CRISPR artwork" loading="lazy">
         </div>
-        <div class="art-card">
-          <img src="images/art-rock-and-roll.png"
-               alt="Biopunk Is the New Rock n Roll comic art" loading="lazy">
+        <div class="gallery-item">
+          <img src="images/art-cyborg-hobo.png" alt="Biopunk cyborg drifter artwork" loading="lazy">
         </div>
-        <div class="art-card">
-          <img src="images/art-gm-no.png"
-               alt="GM-NO retro illustration of engineered organisms" loading="lazy">
+        <div class="gallery-item">
+          <img src="images/art-gm-no.png" alt="GM-NO retro illustration" loading="lazy">
         </div>
-        <div class="art-card">
-          <img src="images/art-aug25.png"
-               alt="Biopunk digital art" loading="lazy">
+        <div class="gallery-item">
+          <img src="images/art-aug25.png" alt="Biopunk digital art" loading="lazy">
         </div>
-        <div class="art-card">
-          <img src="images/art-jul17.png"
-               alt="Biopunk digital art" loading="lazy">
+        <div class="gallery-item">
+          <img src="images/art-jul17.png" alt="Biopunk digital art" loading="lazy">
         </div>
-        <div class="art-card">
-          <img src="images/art-jul20.png"
-               alt="Biopunk digital art" loading="lazy">
+        <div class="gallery-item">
+          <img src="images/art-jul20.png" alt="Biopunk digital art" loading="lazy">
         </div>
-        <div class="art-card">
-          <img src="images/art-jun25.png"
-               alt="Biopunk digital art" loading="lazy">
+        <div class="gallery-item">
+          <img src="images/art-jun25.png" alt="Biopunk digital art" loading="lazy">
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LAB PHOTOS -->
-  <section id="lab">
-    <p class="section-label">Inside the Lab</p>
-    <h2 class="section-title">Real Science, Real People</h2>
-    <p class="section-body">
-      Workshops, open lab nights, and experiments in progress.
-      This is what community biology actually looks like.
-    </p>
-    <div class="lab-grid">
-      <div class="lab-card wide">
-        <img src="images/lab-biosafety.jpeg"
-             alt="Biopunk Lab members working at biosafety cabinet with petri dishes" loading="lazy">
-      </div>
-      <div class="lab-card">
-        <img src="images/lab-workshop-1.jpeg"
-             alt="Workshop participants blending scents in a lab setting" loading="lazy">
-      </div>
-      <div class="lab-card">
-        <img src="images/lab-workshop-2.jpeg"
-             alt="Group of people at a lab workshop" loading="lazy">
-      </div>
-      <div class="lab-card">
-        <img src="images/lab-community-4.jpeg"
-             alt="Biopunk Lab community photo" loading="lazy">
-      </div>
-      <div class="lab-card">
-        <img src="images/lab-community-1.jpg"
-             alt="Biopunk Lab community gathering" loading="lazy">
-      </div>
-      <div class="lab-card">
-        <img src="images/lab-community-2.jpg"
-             alt="Lab session in progress" loading="lazy">
-      </div>
-      <div class="lab-card wide">
-        <img src="images/lab-community-3.jpg"
-             alt="Community dinner and team meetup" loading="lazy">
       </div>
     </div>
   </section>
 
-  <!-- CTA BAND -->
-  <div class="cta-band" id="join">
-    <h2>Ready to Experiment?</h2>
-    <p>Whether you're a biologist, a hacker, or just deeply curious â€” there's a place for you here.</p>
-    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-      <a href="https://biopunk.house" class="btn btn-primary" target="_blank" rel="noopener">Visit Biopunk House</a>
-      <a href="mailto:hello@biopunklab.com" class="btn btn-outline">Get In Touch</a>
+  <!-- LAB PHOTOS -->
+  <section class="lab-section" id="lab">
+    <div class="lab-inner">
+      <p class="section-eyebrow">Inside the Lab</p>
+      <h2 class="section-heading">Real science.<br><strong>Real people.</strong></h2>
+      <div class="lab-masonry">
+        <div class="lab-item span2">
+          <img src="images/lab-biosafety.jpeg" alt="Lab members working at biosafety cabinet" loading="lazy">
+        </div>
+        <div class="lab-item">
+          <img src="images/lab-workshop-1.jpeg" alt="Workshop participants in the lab" loading="lazy">
+        </div>
+        <div class="lab-item">
+          <img src="images/lab-workshop-2.jpeg" alt="Group lab workshop" loading="lazy">
+        </div>
+        <div class="lab-item">
+          <img src="images/lab-community-1.jpg" alt="Biopunk community" loading="lazy">
+        </div>
+        <div class="lab-item">
+          <img src="images/lab-community-4.jpeg" alt="Biopunk community gathering" loading="lazy">
+        </div>
+        <div class="lab-item span2">
+          <img src="images/lab-community-3.jpg" alt="Team dinner and meetup" loading="lazy">
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- FOOTER CTA -->
+  <section class="footer-cta">
+    <h2>Ready to<br><strong>experiment?</strong></h2>
+    <p>Whether you're a biologist, a hacker, or just deeply curious — there's a place for you here.</p>
+    <div class="footer-cta-btns">
+      <a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="btn btn-light">Apply for Membership</a>
+      <a href="https://opencollective.com/biopunk" target="_blank" rel="noopener" class="btn btn-ghost">Support on Open Collective</a>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
-    <p>Â© 2025 Biopunk Lab Â· San Francisco, CA Â·
-      <a href="https://biopunk.house" target="_blank" rel="noopener">biopunk.house</a>
-    </p>
+    <span class="footer-brand">biopunk</span>
+    <ul class="footer-links">
+      <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events</a></li>
+      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener">Membership</a></li>
+      <li><a href="https://opencollective.com/biopunk" target="_blank" rel="noopener">Donate</a></li>
+      <li><a href="https://biopunk.house" target="_blank" rel="noopener">Biopunk House</a></li>
+    </ul>
+    <span style="font-size:0.72rem; color:rgba(232,237,232,0.25); letter-spacing:0.05em;">© 2025 Biopunk · San Francisco, CA</span>
   </footer>
 
 </body>
 </html>
-
