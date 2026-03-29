@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -93,18 +93,31 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('images/bg-microscopy.jpg');
-      background-size: cover;
-      background-position: center;
-      filter: saturate(0.7) brightness(0.45);
+      overflow: hidden;
     }
 
-    /* green vignette overlay like the Squarespace site */
+    .hero-float {
+      position: absolute;
+      opacity: 0.5;
+      filter: drop-shadow(0 0 18px rgba(204,255,0,0.08));
+      animation: floatDrift linear infinite;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    @keyframes floatDrift {
+      0%   { transform: translateY(0px) rotate(0deg); }
+      33%  { transform: translateY(-16px) rotate(2deg); }
+      66%  { transform: translateY(-8px) rotate(-1.5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
     .hero-bg::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, transparent 30%, rgba(5,20,5,0.85) 100%);
+      background: radial-gradient(ellipse at 50% 40%, rgba(8,12,8,0.0) 0%, rgba(8,12,8,0.6) 60%, rgba(8,12,8,0.97) 100%);
+      z-index: 1;
     }
 
     .hero-content {
@@ -531,8 +544,20 @@
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
+  <section class="hero" style="background:#080c08;">
+    <div class="hero-bg">
+      <!-- floating biology objects — matching the Squarespace hero -->
+      <img class="hero-float" src="images/hero-chromosome.png" alt="" style="width:260px;top:5%;left:3%;animation-duration:18s;animation-delay:-3s;opacity:0.45;">
+      <img class="hero-float" src="images/hero-bacteria.png"   alt="" style="width:200px;top:10%;right:5%;animation-duration:22s;animation-delay:-7s;opacity:0.4;">
+      <img class="hero-float" src="images/hero-frog.png"       alt="" style="width:220px;bottom:12%;left:6%;animation-duration:20s;animation-delay:-11s;opacity:0.45;">
+      <img class="hero-float" src="images/hero-petri.png"      alt="" style="width:180px;bottom:8%;right:8%;animation-duration:25s;animation-delay:-5s;opacity:0.4;">
+      <img class="hero-float" src="images/hero-virus.png"      alt="" style="width:160px;top:20%;left:20%;animation-duration:16s;animation-delay:-2s;opacity:0.35;">
+      <img class="hero-float" src="images/hero-cell.png"       alt="" style="width:140px;top:15%;right:22%;animation-duration:19s;animation-delay:-9s;opacity:0.35;">
+      <img class="hero-float" src="images/hero-jellyfish.png"  alt="" style="width:170px;bottom:20%;left:28%;animation-duration:24s;animation-delay:-14s;opacity:0.3;">
+      <img class="hero-float" src="images/hero-moth.png"       alt="" style="width:130px;top:35%;right:12%;animation-duration:21s;animation-delay:-6s;opacity:0.3;">
+      <img class="hero-float" src="images/hero-neuron.png"     alt="" style="width:150px;bottom:30%;right:25%;animation-duration:17s;animation-delay:-4s;opacity:0.3;">
+      <img class="hero-float" src="images/hero-ecoli.png"      alt="" style="width:120px;top:55%;left:12%;animation-duration:23s;animation-delay:-16s;opacity:0.25;">
+    </div>
     <div class="hero-content">
       <img class="hero-logo" src="images/logo.png" alt="Biopunk">
       <p class="hero-eyebrow">San Francisco &middot; Community Biolab</p>
