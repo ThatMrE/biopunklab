@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour the Lab &mdash; Biopunk Lab</title>
+  <meta name="description" content="Discover the tools, the people, and the possibilities of our labs. Take an interactive 360&deg; tour of Biopunk Lab in San Francisco.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Pannellum 360 viewer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #0a0f0a;
+      color: #e8ede8;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(10,15,10,0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-wordmark {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ccff00;
+      text-shadow: 0 0 20px rgba(204,255,0,0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.6);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #ccff00; }
+
+    .nav-links .nav-cta {
+      background: #e8ede8;
+      color: #0a0f0a;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .nav-links .nav-cta:hover { background: #ccff00; color: #0a0f0a; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 9rem 3rem 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.45);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      line-height: 0.95;
+      color: #ccff00;
+      text-shadow: 0 0 60px rgba(204,255,0,0.15);
+      max-width: 900px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(232,237,232,0.55);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ── 360 VIEWER ── */
+    .viewer-section {
+      padding: 2rem 0 5rem;
+    }
+
+    .viewer-header {
+      max-width: 1100px;
+      margin: 0 auto 2rem;
+      padding: 0 3rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .viewer-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: #e8ede8;
+      letter-spacing: 0.05em;
+    }
+
+    .viewer-tabs {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .viewer-tab {
+      background: transparent;
+      border: 1px solid rgba(232,237,232,0.2);
+      color: rgba(232,237,232,0.5);
+      padding: 0.45rem 1rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .viewer-tab:hover { border-color: #ccff00; color: #ccff00; }
+    .viewer-tab.active { background: #ccff00; border-color: #ccff00; color: #0a0f0a; font-weight: 700; }
+
+    #panorama-container {
+      width: 100%;
+      height: 60vh;
+      min-height: 400px;
+      background: #0d120d;
+      position: relative;
+    }
+
+    .pnlm-container { background: #0d120d !important; }
+
+    /* ── PHOTO GRID ── */
+    .photos-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.45);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      letter-spacing: 0.05em;
+      color: #e8ede8;
+      margin-bottom: 2.5rem;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .photo-item {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .photo-item.wide { grid-column: span 2; }
+
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      aspect-ratio: 4/3;
+      transition: transform 0.5s ease, filter 0.3s;
+      filter: brightness(0.9) saturate(0.9);
+    }
+
+    .photo-item.wide img { aspect-ratio: 16/9; }
+    .photo-item:hover img { transform: scale(1.03); filter: brightness(1) saturate(1); }
+
+    /* ── EQUIPMENT ── */
+    .equipment-section {
+      background: #0d120d;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 5rem 3rem;
+    }
+
+    .equipment-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .equipment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .equipment-item {
+      border-top: 1px solid rgba(204,255,0,0.2);
+      padding-top: 1.25rem;
+    }
+
+    .equipment-item h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ccff00;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.03em;
+    }
+
+    .equipment-item p {
+      font-size: 0.85rem;
+      color: rgba(232,237,232,0.5);
+      line-height: 1.6;
+    }
+
+    /* ── CTA ── */
+    .cta-band {
+      text-align: center;
+      padding: 6rem 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-band h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      letter-spacing: 0.05em;
+      color: #e8ede8;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+
+    .cta-band p {
+      color: rgba(232,237,232,0.5);
+      font-size: 1rem;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+
+    .btn-yellow { background: #ccff00; color: #0a0f0a; }
+    .btn-yellow:hover { background: #ddff44; }
+
+    .btn-ghost {
+      background: transparent;
+      color: #e8ede8;
+      border: 1px solid rgba(232,237,232,0.35);
+    }
+    .btn-ghost:hover { border-color: #ccff00; color: #ccff00; }
+
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060b06;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer .footer-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: #ccff00;
+    }
+
+    footer .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    footer .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.35);
+      transition: color 0.2s;
+    }
+    footer .footer-links a:hover { color: rgba(232,237,232,0.7); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero, .photos-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .viewer-header { padding: 0 1.5rem; }
+      .photo-grid { grid-template-columns: 1fr 1fr; }
+      .photo-item.wide { grid-column: span 2; }
+      .equipment-section { padding: 4rem 1.5rem; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links li:not(:last-child) { display: none; }
+      .photo-grid { grid-template-columns: 1fr; }
+      .photo-item.wide { grid-column: span 1; }
+      .photo-item.wide img { aspect-ratio: 4/3; }
+      #panorama-container { height: 50vw; min-height: 280px; }
+      .viewer-tabs { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-wordmark" href="index.html">Biopunk Lab</a>
+    <ul class="nav-links">
+      <li><a href="tour-the-lab.html" class="active">Tour the Lab</a></li>
+      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener">Membership</a></li>
+      <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
+      <li><a href="index.html#gallery">Art</a></li>
+      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="nav-cta">Join</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">San Francisco &middot; Downtown Lab</p>
+    <h1>Discover the tools, the people, and the possibilities of our labs.</h1>
+    <p class="hero-sub">
+      Step inside Biopunk Lab &mdash; a state-of-the-art community biology space
+      in the heart of San Francisco. Explore the space in 360&deg; or browse our photo gallery below.
+    </p>
+  </div>
+
+  <!-- 360 VIEWER -->
+  <div class="viewer-section">
+    <div class="viewer-header">
+      <h2>360&deg; Lab Tour</h2>
+      <div class="viewer-tabs">
+        <button class="viewer-tab active" onclick="loadScene(0)">View 1</button>
+        <button class="viewer-tab" onclick="loadScene(1)">View 2</button>
+        <button class="viewer-tab" onclick="loadScene(2)">View 3</button>
+      </div>
+    </div>
+    <div id="panorama-container"></div>
+  </div>
+
+  <!-- PHOTO GALLERY -->
+  <div class="photos-section" id="photos">
+    <p class="section-eyebrow">Inside the Lab</p>
+    <h2 class="section-heading">Real Science. Real People.</h2>
+    <div class="photo-grid">
+      <div class="photo-item wide">
+        <img src="images/lab-biosafety.jpeg" alt="Lab members working at biosafety cabinet" loading="lazy">
+      </div>
+      <div class="photo-item">
+        <img src="images/lab-workshop-1.jpeg" alt="Workshop participants in the lab" loading="lazy">
+      </div>
+      <div class="photo-item">
+        <img src="images/lab-workshop-2.jpeg" alt="Group lab workshop" loading="lazy">
+      </div>
+      <div class="photo-item">
+        <img src="images/lab-community-1.jpg" alt="Biopunk community" loading="lazy">
+      </div>
+      <div class="photo-item">
+        <img src="images/lab-community-4.jpeg" alt="Biopunk community gathering" loading="lazy">
+      </div>
+      <div class="photo-item wide">
+        <img src="images/lab-community-3.jpg" alt="Team dinner and meetup" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- EQUIPMENT -->
+  <div class="equipment-section">
+    <div class="equipment-inner">
+      <p class="section-eyebrow">What We Have</p>
+      <h2 class="section-heading">Lab Equipment</h2>
+      <div class="equipment-grid">
+        <div class="equipment-item">
+          <h4>Biosafety Cabinet</h4>
+          <p>Class II laminar flow hood for sterile cell culture and microbiology work.</p>
+        </div>
+        <div class="equipment-item">
+          <h4>PCR Thermocycler</h4>
+          <p>For DNA amplification, genotyping, and molecular cloning protocols.</p>
+        </div>
+        <div class="equipment-item">
+          <h4>Gel Electrophoresis</h4>
+          <p>Agarose and PAGE systems for DNA, RNA, and protein analysis.</p>
+        </div>
+        <div class="equipment-item">
+          <h4>Centrifuges</h4>
+          <p>Microcentrifuges and larger benchtop units for cell and sample prep.</p>
+        </div>
+        <div class="equipment-item">
+          <h4>Microscopy</h4>
+          <p>Optical and fluorescence microscopes for imaging cells and organisms.</p>
+        </div>
+        <div class="equipment-item">
+          <h4>Fermentation &amp; Incubation</h4>
+          <p>Incubators, shakers, and fermenters for growing cells and cultures.</p>
+        </div>
+        <div class="equipment-item">
+          <h4>Chemical Storage</h4>
+          <p>Flammable-rated Justrite cabinets and proper chemical management systems.</p>
+        </div>
+        <div class="equipment-item">
+          <h4>Pipetting &amp; Liquid Handling</h4>
+          <p>Full range of Eppendorf and Pipetman pipettes, tips, and consumables.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <h2>Come See It In Person.</h2>
+    <p>
+      The best way to experience Biopunk Lab is to visit. Join us for an open lab night,
+      take a class, or apply for membership.
+    </p>
+    <div class="cta-btns">
+      <a href="https://lu.ma/biopunk" target="_blank" rel="noopener" class="btn btn-yellow">See Upcoming Events</a>
+      <a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="btn btn-ghost">Apply for Membership</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a class="footer-brand" href="index.html">Biopunk Lab</a>
+    <ul class="footer-links">
+      <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
+      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener">Membership</a></li>
+      <li><a href="https://opencollective.com/biopunk" target="_blank" rel="noopener">Donate</a></li>
+      <li><a href="https://biopunk.house" target="_blank" rel="noopener">Biopunk House</a></li>
+    </ul>
+    <span style="font-size:0.72rem; color:rgba(232,237,232,0.25); letter-spacing:0.05em;">&copy; 2025 Biopunk &middot; San Francisco, CA</span>
+  </footer>
+
+  <script>
+    var scenes = [
+      'images/photosphere-1.jpg',
+      'images/photosphere-2.jpg',
+      'images/photosphere-3.jpg'
+    ];
+
+    var viewer = pannellum.viewer('panorama-container', {
+      type: 'equirectangular',
+      panorama: scenes[0],
+      autoLoad: true,
+      autoRotate: -2,
+      compass: false,
+      showControls: true,
+      hfov: 100,
+      minHfov: 50,
+      maxHfov: 120,
+      backgroundColor: [10, 15, 10],
+      strings: {
+        loadButtonLabel: 'Click to<br>Load Panorama',
+        loadingLabel: 'Loading...',
+        bylineLabel: ''
+      }
+    });
+
+    function loadScene(idx) {
+      var tabs = document.querySelectorAll('.viewer-tab');
+      tabs.forEach(function(t, i) {
+        t.classList.toggle('active', i === idx);
+      });
+      viewer.loadScene = undefined;
+      viewer.destroy ? viewer.destroy() : null;
+
+      viewer = pannellum.viewer('panorama-container', {
+        type: 'equirectangular',
+        panorama: scenes[idx],
+        autoLoad: true,
+        autoRotate: -2,
+        compass: false,
+        showControls: true,
+        hfov: 100,
+        minHfov: 50,
+        maxHfov: 120,
+        backgroundColor: [10, 15, 10]
+      });
+    }
+  </script>
+
+</body>
+</html>
