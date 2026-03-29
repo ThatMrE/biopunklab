@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Map &mdash; Biopunk Lab</title>
+  <meta name="description" content="A global map of community biolabs, DIYbio spaces, and open science hubs around the world.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      background: #0a0f0a;
+      color: #e8ede8;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(10,15,10,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+
+    .nav-wordmark {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      color: #ccff00;
+      text-shadow: 0 0 20px rgba(204,255,0,0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.6);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #e8ede8; }
+    .nav-links a.active { color: #ccff00; }
+
+    .nav-links .nav-cta {
+      background: #e8ede8;
+      color: #0a0f0a;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .nav-links .nav-cta:hover { background: #ccff00; color: #0a0f0a; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 7rem 3rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .page-header .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.45);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      letter-spacing: 0.02em;
+      line-height: 0.95;
+      color: #ccff00;
+      text-shadow: 0 0 60px rgba(204,255,0,0.15);
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1rem;
+      color: rgba(232,237,232,0.5);
+      line-height: 1.65;
+      max-width: 540px;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 3rem;
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: #ccff00;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.4);
+    }
+
+    /* ── MAP ── */
+    .map-wrap {
+      flex: 1;
+      position: relative;
+      min-height: 60vh;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      min-height: 60vh;
+      background: #0a0f0a;
+    }
+
+    /* Leaflet dark overrides */
+    .leaflet-container { background: #080d08; }
+    .leaflet-control-zoom a {
+      background: #0d120d !important;
+      color: #ccff00 !important;
+      border-color: rgba(204,255,0,0.2) !important;
+    }
+    .leaflet-control-zoom a:hover { background: #1a221a !important; }
+    .leaflet-control-attribution {
+      background: rgba(8,13,8,0.8) !important;
+      color: rgba(232,237,232,0.3) !important;
+      font-size: 0.65rem !important;
+    }
+    .leaflet-control-attribution a { color: rgba(232,237,232,0.4) !important; }
+
+    /* Custom popup */
+    .leaflet-popup-content-wrapper {
+      background: #0d120d;
+      border: 1px solid rgba(204,255,0,0.25);
+      border-radius: 4px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+      color: #e8ede8;
+    }
+    .leaflet-popup-tip { background: #0d120d; }
+    .leaflet-popup-content { margin: 14px 18px; }
+
+    .popup-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.05em;
+      color: #ccff00;
+      margin-bottom: 0.3rem;
+    }
+    .popup-location {
+      font-size: 0.75rem;
+      color: rgba(232,237,232,0.5);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .popup-desc {
+      font-size: 0.82rem;
+      color: rgba(232,237,232,0.7);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+    .popup-link {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ccff00;
+      border-bottom: 1px solid rgba(204,255,0,0.3);
+      padding-bottom: 1px;
+    }
+    .popup-link:hover { border-color: #ccff00; }
+
+    /* Legend */
+    .map-legend {
+      position: absolute;
+      bottom: 2rem;
+      left: 1rem;
+      z-index: 500;
+      background: rgba(10,15,10,0.9);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.75rem 1rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .legend-title {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.4);
+      margin-bottom: 0.5rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(232,237,232,0.6);
+      margin-bottom: 0.3rem;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060b06;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .footer-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: #ccff00;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.35);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(232,237,232,0.7); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .nav-links li:not(:last-child):not(:first-child) { display: none; }
+      .page-header { padding: 6rem 1.5rem 1.5rem; }
+      .stats-bar { padding: 1rem 1.5rem; gap: 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-wordmark" href="index.html">Biopunk Lab</a>
+    <ul class="nav-links">
+      <li><a href="tour-the-lab.html">Tour the Lab</a></li>
+      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener">Membership</a></li>
+      <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
+      <li><a href="global-map.html" class="active">Global Map</a></li>
+      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="nav-cta">Join</a></li>
+    </ul>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <p class="eyebrow">Community Biolabs Worldwide</p>
+    <h1>Global Map</h1>
+    <p>The biopunk movement is global. Explore community biolabs, DIYbio spaces, and open science hubs around the world &mdash; from San Francisco to Singapore.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-num">40+</span>
+      <span class="stat-label">Community Labs</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">25+</span>
+      <span class="stat-label">Countries</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">6</span>
+      <span class="stat-label">Continents</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1000s</span>
+      <span class="stat-label">Members Worldwide</span>
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div class="map-wrap">
+    <div id="map"></div>
+    <div class="map-legend">
+      <div class="legend-title">Lab Type</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ccff00;"></div>Biopunk / DIYbio</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#00ccff;"></div>University / Open Access</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#ff6600;"></div>Makerspace / Hackerspace</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a class="footer-brand" href="index.html">Biopunk Lab</a>
+    <ul class="footer-links">
+      <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
+      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener">Membership</a></li>
+      <li><a href="https://opencollective.com/biopunk" target="_blank" rel="noopener">Donate</a></li>
+      <li><a href="https://biopunk.house" target="_blank" rel="noopener">Biopunk House</a></li>
+    </ul>
+    <span style="font-size:0.72rem; color:rgba(232,237,232,0.25); letter-spacing:0.05em;">&copy; 2025 Biopunk &middot; San Francisco, CA</span>
+  </footer>
+
+  <script>
+    // Dark tile layer — CartoDB Dark Matter (no API key needed)
+    var map = L.map('map', {
+      center: [20, 0],
+      zoom: 2,
+      minZoom: 2,
+      maxZoom: 14,
+      zoomControl: true
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20
+    }).addTo(map);
+
+    // Custom marker icons
+    function makeIcon(color) {
+      return L.divIcon({
+        className: '',
+        html: '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6" fill="' + color + '" fill-opacity="0.9" stroke="' + color + '" stroke-width="1.5"/><circle cx="8" cy="8" r="3" fill="#0a0f0a"/></svg>',
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+        popupAnchor: [0, -10]
+      });
+    }
+
+    var iconGreen  = makeIcon('#ccff00');
+    var iconBlue   = makeIcon('#00ccff');
+    var iconOrange = makeIcon('#ff6600');
+
+    // Community biolab locations
+    var labs = [
+      // Biopunk / DIYbio (green)
+      { name: "Biopunk Lab", loc: "San Francisco, CA", lat: 37.7749, lng: -122.4194, type: "green", desc: "The world's largest open-access biolab community. State-of-the-art lab in downtown SF.", url: "https://biopunklab.com" },
+      { name: "Genspace", loc: "Brooklyn, NY", lat: 40.6892, lng: -73.9900, type: "green", desc: "NYC's community biolab. Open to all, no PhD required.", url: "https://genspace.org" },
+      { name: "Biocurious", loc: "Sunnyvale, CA", lat: 37.3688, lng: -122.0363, type: "green", desc: "The hackerspace for biotech in Silicon Valley.", url: "https://biocurious.org" },
+      { name: "LA Biohackers", loc: "Los Angeles, CA", lat: 34.0522, lng: -118.2437, type: "green", desc: "Community science lab in Los Angeles.", url: "https://labiohackers.org" },
+      { name: "Bosslab", loc: "Boston, MA", lat: 42.3601, lng: -71.0589, type: "green", desc: "Boston Open Science Studio — open community biolab.", url: "https://bosslab.us" },
+      { name: "Sprout & Co", loc: "Cambridge, MA", lat: 42.3736, lng: -71.1097, type: "green", desc: "DIYbio and open science community in Cambridge.", url: "#" },
+      { name: "London Biohackspace", loc: "London, UK", lat: 51.5464, lng: -0.0622, type: "green", desc: "UK's leading community biology lab, based in Hackney.", url: "https://biohackspace.org" },
+      { name: "La Paillasse", loc: "Paris, France", lat: 48.8566, lng: 2.3522, type: "green", desc: "Open science community lab in the heart of Paris.", url: "https://lapaillasse.org" },
+      { name: "Hackteria", loc: "Zurich, Switzerland", lat: 47.3769, lng: 8.5417, type: "green", desc: "Network for open source biological art and DIYbio.", url: "https://hackteria.org" },
+      { name: "SGBIOMAKERS", loc: "Singapore", lat: 1.3521, lng: 103.8198, type: "green", desc: "Singapore's community biomakers space.", url: "#" },
+      { name: "BioQuisitive", loc: "Seattle, WA", lat: 47.6062, lng: -122.3321, type: "green", desc: "Community biolab in Seattle.", url: "#" },
+      { name: "Thought Unltd", loc: "San Francisco, CA", lat: 37.7750, lng: -122.4100, type: "green", desc: "SF-based community science and innovation space.", url: "#" },
+      { name: "CoLaborator", loc: "Tampa, FL", lat: 27.9506, lng: -82.4572, type: "green", desc: "Open science collaborative laboratory in Tampa.", url: "#" },
+      { name: "Community BioLab", loc: "Oakland, CA", lat: 37.8044, lng: -122.2712, type: "green", desc: "Oakland's open access community biology lab.", url: "#" },
+      { name: "SciStarter", loc: "Washington, DC", lat: 38.9072, lng: -77.0369, type: "green", desc: "Citizen science and open research hub.", url: "https://scistarter.org" },
+      // University / Open Access (blue)
+      { name: "The Foundry (MIT)", loc: "Cambridge, MA", lat: 42.3601, lng: -71.0941, type: "blue", desc: "MIT's open access synthetic biology foundry.", url: "https://mit.edu" },
+      { name: "IGem HQ", loc: "Boston, MA", lat: 42.3554, lng: -71.0640, type: "blue", desc: "International Genetically Engineered Machine Foundation.", url: "https://igem.org" },
+      { name: "OpenWetWare", loc: "Global / Online", lat: 42.3601, lng: -71.0589, type: "blue", desc: "Open platform for sharing biological protocols.", url: "https://openwetware.org" },
+      { name: "European Biohackspace Network", loc: "Amsterdam, Netherlands", lat: 52.3676, lng: 4.9041, type: "blue", desc: "Network of European open science labs.", url: "#" },
+      { name: "DIYbio.org", loc: "Online / Global", lat: 37.4419, lng: -122.1430, type: "blue", desc: "Global DIYbio community and resource network.", url: "https://diybio.org" },
+      // Makerspace / Hackerspace with bio focus (orange)
+      { name: "Noisebridge", loc: "San Francisco, CA", lat: 37.7627, lng: -122.4194, type: "orange", desc: "SF hackerspace with active biology and biotech projects.", url: "https://noisebridge.net" },
+      { name: "HacDC", loc: "Washington, DC", lat: 38.9207, lng: -77.0244, type: "orange", desc: "DC hackerspace with biology working group.", url: "https://hacdc.org" },
+      { name: "Fab Lab Barcelona", loc: "Barcelona, Spain", lat: 41.3851, lng: 2.1734, type: "orange", desc: "Fab Lab with biofabrication and biodesign focus.", url: "https://fablabbcn.org" },
+      { name: "Waag Futurelab", loc: "Amsterdam, Netherlands", lat: 52.3724, lng: 4.8990, type: "orange", desc: "Open technology lab including wetlab and biodesign.", url: "https://waag.org" },
+      { name: "Biomakespace", loc: "Cambridge, UK", lat: 52.2053, lng: 0.1218, type: "orange", desc: "Open access biology makerspace at Cambridge.", url: "https://biomakespace.com" },
+      { name: "Counter Culture Labs", loc: "Oakland, CA", lat: 37.8086, lng: -122.2685, type: "orange", desc: "Oakland hackerspace with wetlab capabilities.", url: "https://counterculturelabs.org" },
+      { name: "Sydney BioFoundry", loc: "Sydney, Australia", lat: -33.8688, lng: 151.2093, type: "orange", desc: "Open access synthetic biology facility in Sydney.", url: "#" },
+      { name: "Biolab Tokyo", loc: "Tokyo, Japan", lat: 35.6762, lng: 139.6503, type: "orange", desc: "DIYbio and open science community in Tokyo.", url: "#" },
+      { name: "Cape Town BioCommunity", loc: "Cape Town, South Africa", lat: -33.9249, lng: 18.4241, type: "orange", desc: "Open biolab community in Cape Town.", url: "#" },
+      { name: "BioFoundry Chile", loc: "Santiago, Chile", lat: -33.4489, lng: -70.6693, type: "orange", desc: "Open access synthetic biology lab in Santiago.", url: "#" },
+    ];
+
+    labs.forEach(function(lab) {
+      var icon = lab.type === 'green' ? iconGreen : lab.type === 'blue' ? iconBlue : iconOrange;
+      var linkHtml = lab.url && lab.url !== '#'
+        ? '<a href="' + lab.url + '" target="_blank" rel="noopener" class="popup-link">Visit Website &rarr;</a>'
+        : '';
+      var popup = '<div class="popup-name">' + lab.name + '</div>'
+        + '<div class="popup-location">&#x1F4CD; ' + lab.loc + '</div>'
+        + '<div class="popup-desc">' + lab.desc + '</div>'
+        + linkHtml;
+      L.marker([lab.lat, lab.lng], { icon: icon })
+        .addTo(map)
+        .bindPopup(popup, { maxWidth: 260 });
+    });
+  </script>
+
+</body>
+</html>
