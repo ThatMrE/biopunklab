@@ -8,9 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
@@ -27,7 +25,7 @@
 
     a { color: inherit; text-decoration: none; }
 
-    /* ── NAV ── */
+    /* â”€â”€ NAV â”€â”€ */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -78,7 +76,7 @@
     }
     .nav-links .nav-cta:hover { background: #ccff00; color: #0a0f0a; }
 
-    /* ── PAGE HEADER ── */
+    /* â”€â”€ PAGE HEADER â”€â”€ */
     .page-header {
       padding: 7rem 3rem 2rem;
       max-width: 1100px;
@@ -111,7 +109,7 @@
       max-width: 540px;
     }
 
-    /* ── STATS BAR ── */
+    /* â”€â”€ STATS BAR â”€â”€ */
     .stats-bar {
       max-width: 1100px;
       margin: 0 auto;
@@ -143,7 +141,7 @@
       color: rgba(232,237,232,0.4);
     }
 
-    /* ── MAP ── */
+    /* â”€â”€ MAP â”€â”€ */
     .map-wrap {
       flex: 1;
       position: relative;
@@ -157,98 +155,44 @@
       background: #0a0f0a;
     }
 
-    /* Leaflet dark overrides */
-    .leaflet-container { background: #080d08; }
-    .leaflet-control-zoom a {
-      background: #0d120d !important;
-      color: #ccff00 !important;
-      border-color: rgba(204,255,0,0.2) !important;
-    }
-    .leaflet-control-zoom a:hover { background: #1a221a !important; }
-    .leaflet-control-attribution {
-      background: rgba(8,13,8,0.8) !important;
-      color: rgba(232,237,232,0.3) !important;
-      font-size: 0.65rem !important;
-    }
-    .leaflet-control-attribution a { color: rgba(232,237,232,0.4) !important; }
 
-    /* Custom popup */
-    .leaflet-popup-content-wrapper {
-      background: #0d120d;
-      border: 1px solid rgba(204,255,0,0.25);
-      border-radius: 4px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.6);
-      color: #e8ede8;
-    }
-    .leaflet-popup-tip { background: #0d120d; }
-    .leaflet-popup-content { margin: 14px 18px; }
 
-    .popup-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.2rem;
-      letter-spacing: 0.05em;
-      color: #ccff00;
-      margin-bottom: 0.3rem;
+    /* Map tabs */
+    .map-tabs-bar {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 3rem 0;
+      display: flex;
+      gap: 0.5rem;
     }
-    .popup-location {
-      font-size: 0.75rem;
+
+    .map-tab {
+      background: transparent;
+      border: 1px solid rgba(232,237,232,0.15);
       color: rgba(232,237,232,0.5);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
-    .popup-desc {
-      font-size: 0.82rem;
-      color: rgba(232,237,232,0.7);
-      line-height: 1.5;
-      margin-bottom: 0.75rem;
-    }
-    .popup-link {
-      font-size: 0.72rem;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.75rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #ccff00;
-      border-bottom: 1px solid rgba(204,255,0,0.3);
-      padding-bottom: 1px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
     }
-    .popup-link:hover { border-color: #ccff00; }
+    .map-tab:hover { border-color: #ccff00; color: #ccff00; }
+    .map-tab.active { background: #ccff00; border-color: #ccff00; color: #0a0f0a; font-weight: 700; }
 
-    /* Legend */
-    .map-legend {
+    /* Map iframes */
+    .map-frame {
       position: absolute;
-      bottom: 2rem;
-      left: 1rem;
-      z-index: 500;
-      background: rgba(10,15,10,0.9);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 0.75rem 1rem;
-      backdrop-filter: blur(8px);
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none;
     }
+    .map-frame.active { display: block; }
 
-    .legend-title {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(232,237,232,0.4);
-      margin-bottom: 0.5rem;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.75rem;
-      color: rgba(232,237,232,0.6);
-      margin-bottom: 0.3rem;
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* ── FOOTER ── */
+    /* â”€â”€ FOOTER â”€â”€ */
     footer {
       background: #060b06;
       border-top: 1px solid rgba(255,255,255,0.06);
@@ -283,7 +227,7 @@
     }
     .footer-links a:hover { color: rgba(232,237,232,0.7); }
 
-    /* ── RESPONSIVE ── */
+    /* â”€â”€ RESPONSIVE â”€â”€ */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { gap: 1.2rem; }
@@ -304,7 +248,7 @@
       <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener">Membership</a></li>
       <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
       <li><a href="global-map.html" class="active">Global Map</a></li>
-      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="nav-cta">Join</a></li>
+      <li><a href="faq.html">FAQ</a></li><li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="nav-cta">Join</a></li>
     </ul>
   </nav>
 
@@ -335,15 +279,30 @@
     </div>
   </div>
 
+  <!-- MAP TABS -->
+  <div class="map-tabs-bar">
+    <button class="map-tab active" onclick="showMap('world')">World View</button>
+    <button class="map-tab" onclick="showMap('us')">North America</button>
+  </div>
+
   <!-- MAP -->
   <div class="map-wrap">
-    <div id="map"></div>
-    <div class="map-legend">
-      <div class="legend-title">Lab Type</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#ccff00;"></div>Biopunk / DIYbio</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#00ccff;"></div>University / Open Access</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#ff6600;"></div>Makerspace / Hackerspace</div>
-    </div>
+    <iframe
+      id="map-world"
+      class="map-frame active"
+      src="https://www.google.com/maps/d/u/0/embed?mid=1E8pu8O-MU0LSx_4a4S_KTU8gb5ToOYk&ehbc=2E312F&noprof=1"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+    <iframe
+      id="map-us"
+      class="map-frame"
+      src="https://www.google.com/maps/d/u/0/embed?mid=17n4ghGziLH0bkenqPZjGzAfHzWxSTy4&ehbc=2E312F&noprof=1"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
   </div>
 
   <!-- FOOTER -->
@@ -359,86 +318,12 @@
   </footer>
 
   <script>
-    // Dark tile layer — CartoDB Dark Matter (no API key needed)
-    var map = L.map('map', {
-      center: [20, 0],
-      zoom: 2,
-      minZoom: 2,
-      maxZoom: 14,
-      zoomControl: true
-    });
-
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 20
-    }).addTo(map);
-
-    // Custom marker icons
-    function makeIcon(color) {
-      return L.divIcon({
-        className: '',
-        html: '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6" fill="' + color + '" fill-opacity="0.9" stroke="' + color + '" stroke-width="1.5"/><circle cx="8" cy="8" r="3" fill="#0a0f0a"/></svg>',
-        iconSize: [16, 16],
-        iconAnchor: [8, 8],
-        popupAnchor: [0, -10]
-      });
+    function showMap(id) {
+      document.querySelectorAll('.map-frame').forEach(function(f) { f.classList.remove('active'); });
+      document.querySelectorAll('.map-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.getElementById('map-' + id).classList.add('active');
+      event.target.classList.add('active');
     }
-
-    var iconGreen  = makeIcon('#ccff00');
-    var iconBlue   = makeIcon('#00ccff');
-    var iconOrange = makeIcon('#ff6600');
-
-    // Community biolab locations
-    var labs = [
-      // Biopunk / DIYbio (green)
-      { name: "Biopunk Lab", loc: "San Francisco, CA", lat: 37.7749, lng: -122.4194, type: "green", desc: "The world's largest open-access biolab community. State-of-the-art lab in downtown SF.", url: "https://biopunklab.com" },
-      { name: "Genspace", loc: "Brooklyn, NY", lat: 40.6892, lng: -73.9900, type: "green", desc: "NYC's community biolab. Open to all, no PhD required.", url: "https://genspace.org" },
-      { name: "Biocurious", loc: "Sunnyvale, CA", lat: 37.3688, lng: -122.0363, type: "green", desc: "The hackerspace for biotech in Silicon Valley.", url: "https://biocurious.org" },
-      { name: "LA Biohackers", loc: "Los Angeles, CA", lat: 34.0522, lng: -118.2437, type: "green", desc: "Community science lab in Los Angeles.", url: "https://labiohackers.org" },
-      { name: "Bosslab", loc: "Boston, MA", lat: 42.3601, lng: -71.0589, type: "green", desc: "Boston Open Science Studio — open community biolab.", url: "https://bosslab.us" },
-      { name: "Sprout & Co", loc: "Cambridge, MA", lat: 42.3736, lng: -71.1097, type: "green", desc: "DIYbio and open science community in Cambridge.", url: "#" },
-      { name: "London Biohackspace", loc: "London, UK", lat: 51.5464, lng: -0.0622, type: "green", desc: "UK's leading community biology lab, based in Hackney.", url: "https://biohackspace.org" },
-      { name: "La Paillasse", loc: "Paris, France", lat: 48.8566, lng: 2.3522, type: "green", desc: "Open science community lab in the heart of Paris.", url: "https://lapaillasse.org" },
-      { name: "Hackteria", loc: "Zurich, Switzerland", lat: 47.3769, lng: 8.5417, type: "green", desc: "Network for open source biological art and DIYbio.", url: "https://hackteria.org" },
-      { name: "SGBIOMAKERS", loc: "Singapore", lat: 1.3521, lng: 103.8198, type: "green", desc: "Singapore's community biomakers space.", url: "#" },
-      { name: "BioQuisitive", loc: "Seattle, WA", lat: 47.6062, lng: -122.3321, type: "green", desc: "Community biolab in Seattle.", url: "#" },
-      { name: "Thought Unltd", loc: "San Francisco, CA", lat: 37.7750, lng: -122.4100, type: "green", desc: "SF-based community science and innovation space.", url: "#" },
-      { name: "CoLaborator", loc: "Tampa, FL", lat: 27.9506, lng: -82.4572, type: "green", desc: "Open science collaborative laboratory in Tampa.", url: "#" },
-      { name: "Community BioLab", loc: "Oakland, CA", lat: 37.8044, lng: -122.2712, type: "green", desc: "Oakland's open access community biology lab.", url: "#" },
-      { name: "SciStarter", loc: "Washington, DC", lat: 38.9072, lng: -77.0369, type: "green", desc: "Citizen science and open research hub.", url: "https://scistarter.org" },
-      // University / Open Access (blue)
-      { name: "The Foundry (MIT)", loc: "Cambridge, MA", lat: 42.3601, lng: -71.0941, type: "blue", desc: "MIT's open access synthetic biology foundry.", url: "https://mit.edu" },
-      { name: "IGem HQ", loc: "Boston, MA", lat: 42.3554, lng: -71.0640, type: "blue", desc: "International Genetically Engineered Machine Foundation.", url: "https://igem.org" },
-      { name: "OpenWetWare", loc: "Global / Online", lat: 42.3601, lng: -71.0589, type: "blue", desc: "Open platform for sharing biological protocols.", url: "https://openwetware.org" },
-      { name: "European Biohackspace Network", loc: "Amsterdam, Netherlands", lat: 52.3676, lng: 4.9041, type: "blue", desc: "Network of European open science labs.", url: "#" },
-      { name: "DIYbio.org", loc: "Online / Global", lat: 37.4419, lng: -122.1430, type: "blue", desc: "Global DIYbio community and resource network.", url: "https://diybio.org" },
-      // Makerspace / Hackerspace with bio focus (orange)
-      { name: "Noisebridge", loc: "San Francisco, CA", lat: 37.7627, lng: -122.4194, type: "orange", desc: "SF hackerspace with active biology and biotech projects.", url: "https://noisebridge.net" },
-      { name: "HacDC", loc: "Washington, DC", lat: 38.9207, lng: -77.0244, type: "orange", desc: "DC hackerspace with biology working group.", url: "https://hacdc.org" },
-      { name: "Fab Lab Barcelona", loc: "Barcelona, Spain", lat: 41.3851, lng: 2.1734, type: "orange", desc: "Fab Lab with biofabrication and biodesign focus.", url: "https://fablabbcn.org" },
-      { name: "Waag Futurelab", loc: "Amsterdam, Netherlands", lat: 52.3724, lng: 4.8990, type: "orange", desc: "Open technology lab including wetlab and biodesign.", url: "https://waag.org" },
-      { name: "Biomakespace", loc: "Cambridge, UK", lat: 52.2053, lng: 0.1218, type: "orange", desc: "Open access biology makerspace at Cambridge.", url: "https://biomakespace.com" },
-      { name: "Counter Culture Labs", loc: "Oakland, CA", lat: 37.8086, lng: -122.2685, type: "orange", desc: "Oakland hackerspace with wetlab capabilities.", url: "https://counterculturelabs.org" },
-      { name: "Sydney BioFoundry", loc: "Sydney, Australia", lat: -33.8688, lng: 151.2093, type: "orange", desc: "Open access synthetic biology facility in Sydney.", url: "#" },
-      { name: "Biolab Tokyo", loc: "Tokyo, Japan", lat: 35.6762, lng: 139.6503, type: "orange", desc: "DIYbio and open science community in Tokyo.", url: "#" },
-      { name: "Cape Town BioCommunity", loc: "Cape Town, South Africa", lat: -33.9249, lng: 18.4241, type: "orange", desc: "Open biolab community in Cape Town.", url: "#" },
-      { name: "BioFoundry Chile", loc: "Santiago, Chile", lat: -33.4489, lng: -70.6693, type: "orange", desc: "Open access synthetic biology lab in Santiago.", url: "#" },
-    ];
-
-    labs.forEach(function(lab) {
-      var icon = lab.type === 'green' ? iconGreen : lab.type === 'blue' ? iconBlue : iconOrange;
-      var linkHtml = lab.url && lab.url !== '#'
-        ? '<a href="' + lab.url + '" target="_blank" rel="noopener" class="popup-link">Visit Website &rarr;</a>'
-        : '';
-      var popup = '<div class="popup-name">' + lab.name + '</div>'
-        + '<div class="popup-location">&#x1F4CD; ' + lab.loc + '</div>'
-        + '<div class="popup-desc">' + lab.desc + '</div>'
-        + linkHtml;
-      L.marker([lab.lat, lab.lng], { icon: icon })
-        .addTo(map)
-        .bindPopup(popup, { maxWidth: 260 });
-    });
   </script>
 
 </body>

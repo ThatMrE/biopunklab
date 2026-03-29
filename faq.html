@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ &mdash; Biopunk Lab</title>
+  <meta name="description" content="Your questions about Biopunk Lab membership, events, and the community, answered.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #0a0f0a;
+      color: #e8ede8;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(10,15,10,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-wordmark {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      color: #ccff00;
+      text-shadow: 0 0 20px rgba(204,255,0,0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.6);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #e8ede8; }
+    .nav-links a.active { color: #ccff00; }
+
+    .nav-links .nav-cta {
+      background: #e8ede8;
+      color: #0a0f0a;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .nav-links .nav-cta:hover { background: #ccff00; color: #0a0f0a; }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 9rem 3rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    /* ── LEFT — sticky headline ── */
+    .faq-headline {
+      position: sticky;
+      top: 7rem;
+    }
+
+    .faq-headline .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.4);
+      margin-bottom: 1rem;
+    }
+
+    .faq-headline h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: #ccff00;
+      text-shadow: 0 0 60px rgba(204,255,0,0.15);
+      margin-bottom: 2rem;
+    }
+
+    .faq-headline p {
+      font-size: 0.95rem;
+      color: rgba(232,237,232,0.5);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.75rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .btn-yellow { background: #ccff00; color: #0a0f0a; }
+    .btn-yellow:hover { background: #ddff44; }
+
+    /* ── RIGHT — accordion ── */
+    .faq-groups { display: flex; flex-direction: column; gap: 3rem; }
+
+    .faq-group-title {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.3);
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #e8ede8;
+      text-align: left;
+      padding: 1.5rem 0;
+      font-size: 1rem;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: color 0.2s;
+    }
+
+    .faq-question:hover { color: #ccff00; }
+    .faq-question.open { color: #ccff00; }
+
+    .faq-question span { flex: 1; line-height: 1.4; }
+
+    .faq-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      position: relative;
+      opacity: 0.5;
+      transition: opacity 0.2s, transform 0.3s;
+    }
+    .faq-question.open .faq-icon { opacity: 1; transform: rotate(45deg); }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+    }
+    .faq-icon::before { width: 100%; height: 1px; top: 50%; left: 0; transform: translateY(-50%); }
+    .faq-icon::after { width: 1px; height: 100%; left: 50%; top: 0; transform: translateX(-50%); }
+
+    .faq-answer {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.35s ease, padding 0.2s;
+    }
+
+    .faq-answer.open { max-height: 500px; }
+
+    .faq-answer-inner {
+      padding-bottom: 1.5rem;
+      font-size: 0.95rem;
+      color: rgba(232,237,232,0.6);
+      line-height: 1.75;
+      max-width: 520px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060b06;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: #ccff00;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(232,237,232,0.35);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(232,237,232,0.7); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .nav-links li:not(:last-child):not(:nth-last-child(2)) { display: none; }
+      .page-wrap { grid-template-columns: 1fr; gap: 3rem; padding: 7rem 1.5rem 4rem; }
+      .faq-headline { position: static; }
+      footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-wordmark" href="index.html">Biopunk Lab</a>
+    <ul class="nav-links">
+      <li><a href="tour-the-lab.html">Tour the Lab</a></li>
+      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener">Membership</a></li>
+      <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
+      <li><a href="global-map.html">Global Map</a></li>
+      <li><a href="faq.html" class="active nav-cta">FAQ</a></li>
+    </ul>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="page-wrap">
+
+    <!-- LEFT: sticky headline -->
+    <div class="faq-headline">
+      <p class="eyebrow">Got Questions?</p>
+      <h1>Your Questions,<br>Answered</h1>
+      <p>Everything you need to know about Biopunk membership, events, and getting involved. Still have questions?</p>
+      <a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="btn btn-yellow">Apply for Membership &rarr;</a>
+    </div>
+
+    <!-- RIGHT: accordion -->
+    <div class="faq-groups">
+
+      <!-- Membership -->
+      <div>
+        <p class="faq-group-title">Membership</p>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>How much does a Biopunk membership cost?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">We offer a range of solutions designed to meet your needs &mdash; whether you&rsquo;re just getting started or scaling something bigger. Everything is tailored to help you move forward with clarity and confidence.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>What does the membership include?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Access to shared lab spaces, equipment, community events, and workshops.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>Is there a minimum commitment?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">No long-term commitment is required. Memberships are billed monthly.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>Can I cancel my membership?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes. Memberships can be cancelled with notice provided in advance.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>How do I apply for membership?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Submit an inquiry through <a href="https://frontiertower.io/apply" target="_blank" rel="noopener" style="color:#ccff00;">frontiertower.io/apply</a>. Onboarding timelines vary but are designed to be quick and clear.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>How long does onboarding take?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Onboarding timelines vary but are designed to be quick and clear.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tours -->
+      <div>
+        <p class="faq-group-title">Tours</p>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>Can I tour Biopunk before joining?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes. Tours are available by request or during scheduled open house events.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>Do I need to sign up in advance for a tour?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Preferably tours should be scheduled ahead of time. If you walk in there is no guarantee of someone available.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>Can I bring guests to tour the lab?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Guest policies vary depending on the event or tour type.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Events -->
+      <div>
+        <p class="faq-group-title">Events</p>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>What kinds of events does Biopunk host?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Workshops, talks, panels, demos, and interdisciplinary events spanning biotech, art, and science.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>Are events open to non-members?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Many events are open to the public; some are member-only. Check <a href="https://lu.ma/biopunk" target="_blank" rel="noopener" style="color:#ccff00;">lu.ma/biopunk</a> for details on each event.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>How do I find upcoming events?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Events are listed on <a href="https://lu.ma/biopunk" target="_blank" rel="noopener" style="color:#ccff00;">lu.ma/biopunk</a> and shared through community channels.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>Can I host my own event or workshop at Biopunk?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes. Members can propose events for approval. Reach out through the contact form to discuss.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Community -->
+      <div>
+        <p class="faq-group-title">Community</p>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>What is the culture like at Biopunk?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Collaborative, experimental, and community-driven. We welcome people who are curious, builders, and those who aren&rsquo;t afraid to try things outside the normal academic or corporate path.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>Is Biopunk only for biotech professionals?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">No. Biopunk welcomes beginners, artists, and non-traditional researchers. No credentials required to get started.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>Can I collaborate with other members?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes. Collaboration is a core part of the lab&rsquo;s ethos. Many projects here are born from member cross-pollination.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggle(this)">
+            <span>Who should I contact with questions?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Use the website contact form or reach us at <a href="mailto:hello@biopunklab.com" style="color:#ccff00;">hello@biopunklab.com</a>.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a class="footer-brand" href="index.html">Biopunk Lab</a>
+    <ul class="footer-links">
+      <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
+      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener">Membership</a></li>
+      <li><a href="https://opencollective.com/biopunk" target="_blank" rel="noopener">Donate</a></li>
+      <li><a href="https://biopunk.house" target="_blank" rel="noopener">Biopunk House</a></li>
+    </ul>
+    <span style="font-size:0.72rem; color:rgba(232,237,232,0.25); letter-spacing:0.05em;">&copy; 2025 Biopunk &middot; San Francisco, CA</span>
+  </footer>
+
+  <script>
+    function toggle(btn) {
+      var answer = btn.nextElementSibling;
+      var isOpen = btn.classList.contains('open');
+      btn.classList.toggle('open', !isOpen);
+      answer.classList.toggle('open', !isOpen);
+    }
+  </script>
+
+</body>
+</html>
