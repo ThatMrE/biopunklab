@@ -1,0 +1,10 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Env vars to set in Netlify (Site settings -> Environment variables):
+#   AIRTABLE_TOKEN    a personal access token with data.records:read + data.records:write, scoped to the Biopunk base
+#   AIRTABLE_BASE_ID  the base id, looks like appXXXXXXXXXXXXXX

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biopunk Lab // Onboarding System Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0B0A; --panel:#0E100D; --grid:#18220F; --green:#A3FF12; --orange:#FF5C00;
+    --pale:#E9ECE4; --gray:#7A7A7A; --dim:#3A3F36; --text:#C8D0C0; --sub:#7C857A;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:var(--bg);color:var(--text);}
+  body{
+    font-family:'Space Mono',monospace; padding:34px 26px 46px;
+    background-image:repeating-linear-gradient(to bottom, rgba(163,255,18,.045) 0 1px, transparent 1px 4px);
+  }
+  .wrap{max-width:1240px;margin:0 auto;}
+  .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;}
+  .head h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(20px,3vw,30px);margin:0;color:var(--green);letter-spacing:.5px;}
+  .head .sys{font-family:'Syne',sans-serif;font-weight:600;font-size:clamp(14px,2vw,20px);color:var(--text);}
+  .sub{color:var(--sub);font-size:11px;margin:6px 0 20px;}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:22px;font-size:11px;}
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .chip{width:11px;height:11px;border-radius:2px;display:inline-block;}
+  .map{width:100%;height:auto;border:1px solid rgba(163,255,18,.25);border-radius:12px;background:var(--panel);}
+  .stream{margin-top:26px;border-top:1px solid var(--grid);padding-top:20px;}
+  .stream h2{font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:var(--green);letter-spacing:.6px;margin:0 0 14px;}
+  .levers{display:grid;grid-template-columns:1fr 1fr;gap:10px 34px;font-size:12px;line-height:1.5;}
+  .levers b{color:var(--orange);font-weight:700;}
+  .foot{margin-top:22px;color:var(--sub);font-size:10.5px;}
+  .foot em{color:var(--pale);font-style:normal;}
+  @media(max-width:680px){.levers{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head"><h1>BIOPUNK LAB</h1><span class="sys">// MEMBER ONBOARDING SYSTEM</span></div>
+  <div class="sub">SYS://onboarding.map &nbsp;·&nbsp; 7 stages &nbsp;·&nbsp; 3 surfaces + internal ops &nbsp;·&nbsp; status: DRAFT</div>
+
+  <div class="legend">
+    <span><i class="chip" style="background:var(--green)"></i>PUBLIC SITE &nbsp;<em style="color:var(--sub)">front door</em></span>
+    <span><i class="chip" style="background:var(--orange)"></i>MEMBER PORTAL &nbsp;<em style="color:var(--sub)">member home</em></span>
+    <span><i class="chip" style="background:var(--pale)"></i>IN-LAB DISPLAY &nbsp;<em style="color:var(--sub)">signage</em></span>
+    <span><i class="chip" style="background:var(--gray)"></i>INTERNAL OPS &nbsp;<em style="color:var(--sub)">staff / CRM</em></span>
+  </div>
+
+  <svg class="map" viewBox="0 0 1240 470" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" font-family="'Space Mono', monospace">
+    <defs>
+      <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#A3FF12"/><stop offset="1" stop-color="#FF5C00"/>
+      </linearGradient>
+      <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="2.2" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <!-- stage headers -->
+    <g text-anchor="middle">
+      <g fill="var(--sub)" font-size="9.5">
+        <text x="244" y="30">01</text><text x="393" y="30">02</text><text x="541" y="30">03</text>
+        <text x="690" y="30">04</text><text x="839" y="30">05</text><text x="987" y="30">06</text><text x="1136" y="30">07</text>
+      </g>
+      <g font-family="'Syne',sans-serif" font-weight="800" font-size="13.5">
+        <text x="244" y="58" fill="var(--green)">DISCOVER</text>
+        <text x="393" y="58" fill="var(--green)">APPLY</text>
+        <text x="541" y="58" fill="var(--text)">REVIEW</text>
+        <text x="690" y="58" fill="var(--orange)">AGREE + PAY</text>
+        <text x="839" y="58" fill="var(--orange)">SAFETY</text>
+        <text x="987" y="58" fill="var(--orange)">ACTIVATE</text>
+        <text x="1136" y="58" fill="var(--orange)">IN-LAB LIFE</text>
+      </g>
+      <g fill="var(--text)" font-size="9">
+        <text x="244" y="76">Learns the lab,</text><text x="244" y="88">tiers, BSL, scope</text>
+        <text x="393" y="76">Short intake:</text><text x="393" y="88">project + safety</text>
+        <text x="541" y="76">Waits; books</text><text x="541" y="88">tour or call</text>
+        <text x="690" y="76">Signs packet,</text><text x="690" y="88">picks tier, pays</text>
+        <text x="839" y="76">BSL training,</text><text x="839" y="88">PPE, waste, quiz</text>
+        <text x="987" y="76">Access, booking,</text><text x="987" y="88">creds, community</text>
+        <text x="1136" y="76">Books gear, status,</text><text x="1136" y="88">presence, events</text>
+      </g>
+    </g>
+
+    <!-- separators -->
+    <g stroke="var(--grid)">
+      <line x1="319" y1="104" x2="319" y2="430"/><line x1="467" y1="104" x2="467" y2="430"/>
+      <line x1="616" y1="104" x2="616" y2="430"/><line x1="764" y1="104" x2="764" y2="430"/>
+      <line x1="913" y1="104" x2="913" y2="430"/><line x1="1061" y1="104" x2="1061" y2="430"/>
+    </g>
+
+    <!-- lane labels -->
+    <g text-anchor="end" font-family="'Syne',sans-serif" font-weight="800" font-size="12">
+      <text x="158" y="167" fill="var(--green)">PUBLIC SITE</text>
+      <text x="158" y="247" fill="var(--orange)">MEMBER PORTAL</text>
+      <text x="158" y="327" fill="var(--pale)">IN-LAB DISPLAY</text>
+      <text x="158" y="407" fill="var(--gray)">INTERNAL OPS</text>
+    </g>
+
+    <!-- lane baselines -->
+    <g stroke="var(--dim)" stroke-dasharray="2 6" opacity="0.6">
+      <line x1="180" y1="170" x2="1200" y2="170"/><line x1="180" y1="250" x2="1200" y2="250"/>
+      <line x1="180" y1="330" x2="1200" y2="330"/><line x1="180" y1="410" x2="1200" y2="410"/>
+    </g>
+
+    <!-- co-active branch stubs -->
+    <g stroke-dasharray="3 4" stroke-width="1.4" opacity="0.8">
+      <line x1="393" y1="170" x2="393" y2="410" stroke="var(--gray)"/>
+      <line x1="839" y1="250" x2="839" y2="330" stroke="var(--pale)"/>
+      <line x1="987" y1="250" x2="987" y2="410" stroke="var(--gray)"/>
+      <line x1="1136" y1="250" x2="1136" y2="330" stroke="var(--pale)"/>
+    </g>
+
+    <!-- primary flow -->
+    <path d="M244,170 H393 H467 V410 H541 H616 V250 H690 H839 H987 H1136"
+          fill="none" stroke="url(#flow)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+
+    <!-- unlit nodes -->
+    <g fill="none" stroke="var(--dim)" stroke-width="1.4">
+      <circle cx="541" cy="170" r="4"/><circle cx="690" cy="170" r="4"/><circle cx="839" cy="170" r="4"/><circle cx="987" cy="170" r="4"/><circle cx="1136" cy="170" r="4"/>
+      <circle cx="244" cy="250" r="4"/><circle cx="393" cy="250" r="4"/><circle cx="541" cy="250" r="4"/>
+      <circle cx="244" cy="330" r="4"/><circle cx="393" cy="330" r="4"/><circle cx="541" cy="330" r="4"/><circle cx="690" cy="330" r="4"/><circle cx="987" cy="330" r="4"/>
+      <circle cx="244" cy="410" r="4"/><circle cx="690" cy="410" r="4"/><circle cx="839" cy="410" r="4"/><circle cx="1136" cy="410" r="4"/>
+    </g>
+
+    <!-- lit nodes -->
+    <g filter="url(#glow)">
+      <circle cx="244" cy="170" r="7" fill="var(--green)"/><circle cx="393" cy="170" r="7" fill="var(--green)"/>
+      <circle cx="690" cy="250" r="7" fill="var(--orange)"/><circle cx="839" cy="250" r="7" fill="var(--orange)"/><circle cx="987" cy="250" r="7" fill="var(--orange)"/><circle cx="1136" cy="250" r="7" fill="var(--orange)"/>
+      <circle cx="839" cy="330" r="7" fill="var(--pale)"/><circle cx="1136" cy="330" r="7" fill="var(--pale)"/>
+      <circle cx="393" cy="410" r="7" fill="var(--gray)"/><circle cx="541" cy="410" r="7" fill="var(--gray)"/><circle cx="987" cy="410" r="7" fill="var(--gray)"/>
+    </g>
+  </svg>
+
+  <div class="stream">
+    <h2>STREAMLINE = COLLAPSE HAND-OFFS</h2>
+    <div class="levers">
+      <div>› One e-sign packet + Stripe in one sitting, not five emails <b>(04)</b></div>
+      <div>› Online safety module <span style="color:var(--sub)">before</span> the in-person session; the quiz IS the record <b>(05)</b></div>
+      <div>› Auto-provision door + booking + creds from a single activation checklist <b>(06)</b></div>
+      <div>› Wall booking board mirrors the portal, same live data <b>(07)</b></div>
+    </div>
+  </div>
+
+  <div class="foot">A <em>lit node</em> means that surface is active in that stage. Follow the line to see who owns each hand-off: the public site carries Discover + Apply, the portal is the spine from Agree through In-Lab Life, in-lab displays co-run Safety and In-Lab Life, and internal ops is the invisible glue at Apply, Review, and Activate.</div>
+</div>
+</body>
+</html>

@@ -527,23 +527,104 @@
       .lab-item.span2 { grid-column: span 1; }
       .lab-item.span2 img { aspect-ratio: 4/3; }
     }
+/* ── MEMBERSHIP PAGE ── */
+    .nav-links a.active { color: #ccff00; }
+    .wrap-1200 { max-width: 1200px; margin: 0 auto; padding: 6.5rem 3rem; }
+
+    .mhero {
+      position: relative; min-height: 62vh; display: flex; align-items: center;
+      justify-content: center; text-align: center; padding: 9rem 2rem 5rem;
+      overflow: hidden; background: #080c08;
+    }
+    .mhero-content { position: relative; z-index: 1; max-width: 760px; }
+    .mhero h1 {
+      font-family: 'Bebas Neue', 'Barlow Condensed', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem); font-weight: 400; letter-spacing: 0.01em;
+      line-height: 0.95; color: #ccff00; text-shadow: 0 0 60px rgba(204,255,0,0.2);
+      margin-bottom: 0.4rem;
+    }
+
+    .tiers-sec { background: #0a0f0a; }
+    .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .tier {
+      background: #0d120d; border: 1px solid rgba(255,255,255,0.08);
+      padding: 2.25rem 2rem; display: flex; flex-direction: column; position: relative;
+    }
+    .tier.feat { border-color: #ccff00; box-shadow: 0 0 0 1px rgba(204,255,0,0.22), 0 24px 60px -34px rgba(204,255,0,0.35); }
+    .tier-badge {
+      position: absolute; top: -11px; left: 2rem; background: #ccff00; color: #0a0f0a;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 10px;
+    }
+    .tier-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.06em; color: #e8ede8; }
+    .tier-who { font-size: 0.85rem; color: rgba(232,237,232,0.5); margin: 0.25rem 0 1.25rem; min-height: 2.6em; line-height: 1.4; }
+    .tier-price { font-family: 'Bebas Neue', sans-serif; font-size: 2.7rem; color: #ccff00; line-height: 1; }
+    .tier-price small { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.8rem; color: rgba(232,237,232,0.45); letter-spacing: 0.02em; }
+    .tier-list { list-style: none; margin: 1.5rem 0 1.75rem; flex: 1; }
+    .tier-list li { font-size: 0.92rem; color: rgba(232,237,232,0.75); padding: 0.45rem 0 0.45rem 1.25rem; position: relative; line-height: 1.4; }
+    .tier-list li::before { content: '\203A'; position: absolute; left: 0; color: #ccff00; }
+    .tier-cta {
+      display: block; text-align: center; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.85rem; border: 1px solid rgba(232,237,232,0.3); color: #e8ede8; transition: all 0.2s;
+    }
+    .tier.feat .tier-cta { background: #ccff00; color: #0a0f0a; border-color: #ccff00; }
+    .tier-cta:hover { border-color: #ccff00; color: #ccff00; }
+    .tier.feat .tier-cta:hover { background: #b3e600; color: #0a0f0a; }
+    .tier-note { font-size: 0.85rem; color: rgba(232,237,232,0.45); margin-top: 2rem; line-height: 1.6; }
+    .tier-note a { color: #ccff00; border-bottom: 1px solid rgba(204,255,0,0.4); }
+
+    .join-sec { background: #070c07; }
+    .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+    .step-n { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: #ccff00; letter-spacing: 0.08em; padding-top: 0.75rem; margin-bottom: 0.6rem; border-top: 1px solid rgba(204,255,0,0.3); }
+    .step h3 { font-size: 1.05rem; font-weight: 600; color: #e8ede8; margin-bottom: 0.4rem; }
+    .step p { font-size: 0.85rem; color: rgba(232,237,232,0.55); line-height: 1.55; }
+    .join-cta { margin-top: 3rem; }
+
+    .safety-sec { background: #0a0f0a; }
+    .safety-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .safety-h { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 300; color: #e8ede8; margin-bottom: 1rem; }
+    .safety-p { font-size: 1rem; color: rgba(232,237,232,0.6); line-height: 1.65; margin-bottom: 1.5rem; }
+    .safety-p strong { color: #ccff00; font-weight: 700; }
+    .safety-list { list-style: none; }
+    .safety-list li { font-size: 0.95rem; color: rgba(232,237,232,0.72); padding: 1rem 0 1rem 3rem; position: relative; border-top: 1px solid rgba(255,255,255,0.07); line-height: 1.5; }
+    .safety-list li span { position: absolute; left: 0; top: 1rem; font-family: 'Bebas Neue', sans-serif; color: #ccff00; font-size: 1.1rem; }
+
+    .equip-sec { background: #070c07; }
+    .equip-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .equip-tag { border: 1px solid rgba(232,237,232,0.18); color: rgba(232,237,232,0.8); font-size: 0.85rem; letter-spacing: 0.03em; padding: 0.6rem 1.1rem; }
+
+    .ph { color: #ccff00; }
+
+    @media (max-width: 900px) {
+      .tier-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .safety-inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .steps { grid-template-columns: 1fr; }
+      .wrap-1200 { padding: 4.5rem 1.25rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { .hero-float { animation: none !important; } }
+
+  
+    .steps-3 { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 700px) { .steps-3 { grid-template-columns: 1fr; } }
+
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
+<nav>
     <span class="nav-wordmark">biopunk</span>
     <ul class="nav-links">
       <li><a href="tour-the-lab.html">Tour the Lab</a></li>
       <li><a href="membership.html">Membership</a></li>
+      <li><a href="community.html">Community</a></li>
       <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
       <li><a href="global-map.html">Global Map</a></li>
-      <li><a href="faq.html">FAQ</a></li><li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="nav-cta">Join</a></li>
+      <li><a href="faq.html">FAQ</a></li><li><a href="apply.html" class="nav-cta">Apply</a></li>
     </ul>
   </nav>
-
-  <!-- HERO -->
+<!-- HERO -->
   <section class="hero" style="background:#080c08;">
     <div class="hero-bg">
       <!-- floating biology objects — matching the Squarespace hero -->
@@ -569,6 +650,23 @@
       <div class="hero-actions">
         <a href="https://lu.ma/biopunk" target="_blank" rel="noopener" class="btn btn-light">See Events</a>
         <a href="#about" class="btn btn-ghost">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT BAND -->
+  <section class="about-band">
+    <div class="about-band-inner">
+      <div>
+        <h2>Science for everyone.<br><strong>Rules optional.</strong></h2>
+        <p>Biopunk Lab is a hands-on community biology space where curious minds come to build, break, and discover. We believe that access to biotechnology shouldn't be gated by institutions &mdash; it belongs to everyone.</p>
+        <p>From CRISPR experiments to fermentation, synthetic biology to bioinformatics, we're building the tools and community to make biology an open discipline.</p>
+        <p>We host workshops, open lab nights, and collaborative research projects. If you've ever wanted to do real science outside of a corporate or academic lab, this is where you belong.</p>
+        <br>
+        <a href="membership.html" class="btn btn-light" style="margin-top:0.5rem;">Apply for Membership â†’</a>
+      </div>
+      <div>
+        <img class="about-img" src="images/lab-biosafety.jpeg" alt="Biopunk Lab members working at biosafety cabinet">
       </div>
     </div>
   </section>
@@ -608,24 +706,84 @@
 
   <div class="divider"></div>
 
-  <!-- ABOUT BAND -->
-  <section class="about-band">
-    <div class="about-band-inner">
-      <div>
-        <h2>Science for everyone.<br><strong>Rules optional.</strong></h2>
-        <p>Biopunk Lab is a hands-on community biology space where curious minds come to build, break, and discover. We believe that access to biotechnology shouldn't be gated by institutions &mdash; it belongs to everyone.</p>
-        <p>From CRISPR experiments to fermentation, synthetic biology to bioinformatics, we're building the tools and community to make biology an open discipline.</p>
-        <p>We host workshops, open lab nights, and collaborative research projects. If you've ever wanted to do real science outside of a corporate or academic lab, this is where you belong.</p>
-        <br>
-        <a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="btn btn-light" style="margin-top:0.5rem;">Apply for Membership â†’</a>
+  
+  <!-- MEMBERSHIP PREVIEW -->
+  <section class="tiers-sec" id="membership">
+    <div class="wrap-1200">
+      <p class="section-eyebrow">Membership</p>
+      <h2 class="section-heading">Find your <strong>bench.</strong></h2>
+      <div class="tier-grid">
+        <div class="tier">
+          <div class="tier-name">Community</div>
+          <div class="tier-who">For learners and the curious.</div>
+          <div class="tier-price"><span class="ph">$[XX]</span><small> /mo</small></div>
+          <ul class="tier-list">
+            <li>Open lab nights &amp; community projects</li>
+            <li>Member rates on classes</li>
+            <li>Events &amp; community</li>
+          </ul>
+          <a href="membership.html" class="tier-cta">Learn more</a>
+        </div>
+        <div class="tier feat">
+          <div class="tier-badge">Most popular</div>
+          <div class="tier-name">Resident</div>
+          <div class="tier-who">For builders with a project of their own.</div>
+          <div class="tier-price"><span class="ph">$[XXX]</span><small> /mo</small></div>
+          <ul class="tier-list">
+            <li>Full bench access &amp; your own project</li>
+            <li>Shared equipment &amp; storage</li>
+            <li><span class="ph">[24/7]</span> keyed access</li>
+          </ul>
+          <a href="membership.html" class="tier-cta">Apply for a bench</a>
+        </div>
+        <div class="tier">
+          <div class="tier-name">Startup / Team</div>
+          <div class="tier-who">For a company before its own lab.</div>
+          <div class="tier-price"><span class="ph">$[X,XXX]</span><small> /mo</small></div>
+          <ul class="tier-list">
+            <li>Multiple benches &amp; team access</li>
+            <li>Dedicated storage &amp; address</li>
+            <li>Partnership options</li>
+          </ul>
+          <a href="membership.html" class="tier-cta">Talk to us</a>
+        </div>
       </div>
-      <div>
-        <img class="about-img" src="images/lab-biosafety.jpeg" alt="Biopunk Lab members working at biosafety cabinet">
-      </div>
+      <p class="tier-note">Every membership includes safety onboarding and BSL-1 project approval. <a href="membership.html">Compare tiers and apply &rarr;</a></p>
     </div>
   </section>
 
-  <!-- VALUES -->
+  <!-- HOW TO JOIN -->
+  <section class="join-sec">
+    <div class="wrap-1200">
+      <p class="section-eyebrow">How it works</p>
+      <h2 class="section-heading">Three steps to a <strong>bench.</strong></h2>
+      <div class="steps steps-3">
+        <div class="step"><div class="step-n">01</div><h3>Apply</h3><p>A short form about you and what you want to build. About two minutes.</p></div>
+        <div class="step"><div class="step-n">02</div><h3>Meet &amp; onboard</h3><p>A conversation, a lab tour, and BSL-1 safety onboarding. Reviewed on a rolling basis.</p></div>
+        <div class="step"><div class="step-n">03</div><h3>Build</h3><p>Get your badge, book equipment, and start running experiments.</p></div>
+      </div>
+      <div class="join-cta"><a href="membership.html#join" class="card-btn">See the full process &rarr;</a></div>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section class="safety-sec">
+    <div class="wrap-1200 safety-inner">
+      <div>
+        <p class="section-eyebrow" style="color:#ccff00;">Safety First</p>
+        <h2 class="safety-h">Punk, not reckless.</h2>
+        <p class="safety-p">Open access only works because the space is safe. Biopunk Lab operates at <strong>Biosafety Level 1</strong>, and every member is onboarded before touching a bench.</p>
+        <a href="membership.html" class="card-btn">How we keep it safe &rarr;</a>
+      </div>
+      <ul class="safety-list">
+        <li><span>01</span> Every member project is reviewed and approved before work begins.</li>
+        <li><span>02</span> Posted safety procedures, PPE, and waste handling at every bench.</li>
+        <li><span>03</span> New materials go through a simple approval step against our inventory.</li>
+        <li><span>04</span> We follow the community-bio code of ethics. No BSL-2 or higher work.</li>
+      </ul>
+    </div>
+  </section>
+<!-- VALUES -->
   <section class="values-strip">
     <div class="values-strip-inner">
       <p class="section-eyebrow">What We Stand For</p>
@@ -650,6 +808,34 @@
           <div class="value-icon">&#x1F310;</div>
           <h4>Community First</h4>
           <p>A space built by and for curious people. No gatekeeping, no credentials required to start.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAB PHOTOS -->
+  <section class="lab-section" id="lab">
+    <div class="lab-inner">
+      <p class="section-eyebrow">Inside the Lab</p>
+      <h2 class="section-heading">Real science.<br><strong>Real people.</strong></h2>
+      <div class="lab-masonry">
+        <div class="lab-item span2">
+          <img src="images/lab-biosafety.jpeg" alt="Lab members working at biosafety cabinet" loading="lazy">
+        </div>
+        <div class="lab-item">
+          <img src="images/lab-workshop-1.jpeg" alt="Workshop participants in the lab" loading="lazy">
+        </div>
+        <div class="lab-item">
+          <img src="images/lab-workshop-2.jpeg" alt="Group lab workshop" loading="lazy">
+        </div>
+        <div class="lab-item">
+          <img src="images/lab-community-1.jpg" alt="Biopunk community" loading="lazy">
+        </div>
+        <div class="lab-item">
+          <img src="images/lab-community-4.jpeg" alt="Biopunk community gathering" loading="lazy">
+        </div>
+        <div class="lab-item span2">
+          <img src="images/lab-community-3.jpg" alt="Team dinner and meetup" loading="lazy">
         </div>
       </div>
     </div>
@@ -692,40 +878,12 @@
     </div>
   </section>
 
-  <!-- LAB PHOTOS -->
-  <section class="lab-section" id="lab">
-    <div class="lab-inner">
-      <p class="section-eyebrow">Inside the Lab</p>
-      <h2 class="section-heading">Real science.<br><strong>Real people.</strong></h2>
-      <div class="lab-masonry">
-        <div class="lab-item span2">
-          <img src="images/lab-biosafety.jpeg" alt="Lab members working at biosafety cabinet" loading="lazy">
-        </div>
-        <div class="lab-item">
-          <img src="images/lab-workshop-1.jpeg" alt="Workshop participants in the lab" loading="lazy">
-        </div>
-        <div class="lab-item">
-          <img src="images/lab-workshop-2.jpeg" alt="Group lab workshop" loading="lazy">
-        </div>
-        <div class="lab-item">
-          <img src="images/lab-community-1.jpg" alt="Biopunk community" loading="lazy">
-        </div>
-        <div class="lab-item">
-          <img src="images/lab-community-4.jpeg" alt="Biopunk community gathering" loading="lazy">
-        </div>
-        <div class="lab-item span2">
-          <img src="images/lab-community-3.jpg" alt="Team dinner and meetup" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- FOOTER CTA -->
   <section class="footer-cta">
     <h2>Ready to<br><strong>experiment?</strong></h2>
     <p>Whether you're a biologist, a hacker, or just deeply curious &mdash; there's a place for you here.</p>
     <div class="footer-cta-btns">
-      <a href="https://frontiertower.io/apply" target="_blank" rel="noopener" class="btn btn-light">Apply for Membership</a>
+      <a href="membership.html" class="btn btn-light">Apply for Membership</a>
       <a href="https://opencollective.com/biopunk" target="_blank" rel="noopener" class="btn btn-ghost">Support on Open Collective</a>
     </div>
   </section>
@@ -736,6 +894,7 @@
     <ul class="footer-links">
       <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
       <li><a href="membership.html">Membership</a></li>
+      <li><a href="community.html">Community</a></li>
       <li><a href="https://opencollective.com/biopunk" target="_blank" rel="noopener">Donate</a></li>
       <li><a href="https://biopunk.house" target="_blank" rel="noopener">Biopunk House</a></li>
     </ul>
