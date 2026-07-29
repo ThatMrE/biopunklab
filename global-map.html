@@ -256,7 +256,7 @@
   <!-- HEADER -->
   <div class="page-header">
     <p class="eyebrow">Community Biolabs Worldwide</p>
-    <h1>Global Map</h1>
+    <h1>The movement is everywhere.</h1>
     <p>The biopunk movement is global. Explore community biolabs, DIYbio spaces, and open science hubs around the world &mdash; from San Francisco to Singapore.</p>
   </div>
 
@@ -282,16 +282,27 @@
 
   <!-- MAP TABS -->
   <div class="map-tabs-bar">
-    <button class="map-tab active" onclick="showMap('world')">World View</button>
-    <button class="map-tab" onclick="showMap('us')">North America</button>
+    <button class="map-tab active" onclick="showMap('atlas', this)">Atlas</button>
+    <button class="map-tab" onclick="showMap('world', this)">World View</button>
+    <button class="map-tab" onclick="showMap('us', this)">North America</button>
   </div>
 
   <!-- MAP -->
   <div class="map-wrap">
     <iframe
-      id="map-world"
+      id="map-atlas"
       class="map-frame active"
+      src="https://global-biolab-atlas.netlify.app/"
+      title="Global Biolab Atlas — interactive world map of community biolabs"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+    <iframe
+      id="map-world"
+      class="map-frame"
       src="https://www.google.com/maps/d/u/0/embed?mid=1E8pu8O-MU0LSx_4a4S_KTU8gb5ToOYk&ehbc=2E312F&noprof=1"
+      title="World map of community biolabs"
       allowfullscreen
       loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"
@@ -300,6 +311,7 @@
       id="map-us"
       class="map-frame"
       src="https://www.google.com/maps/d/u/0/embed?mid=17n4ghGziLH0bkenqPZjGzAfHzWxSTy4&ehbc=2E312F&noprof=1"
+      title="North America map of community biolabs"
       allowfullscreen
       loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"
@@ -320,11 +332,11 @@
   </footer>
 
   <script>
-    function showMap(id) {
+    function showMap(id, btn) {
       document.querySelectorAll('.map-frame').forEach(function(f) { f.classList.remove('active'); });
       document.querySelectorAll('.map-tab').forEach(function(t) { t.classList.remove('active'); });
       document.getElementById('map-' + id).classList.add('active');
-      event.target.classList.add('active');
+      btn.classList.add('active');
     }
   </script>
 
