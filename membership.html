@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* â”€â”€ RESET & BASE â”€â”€ */
+    /* ── RESET & BASE ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; font-size: 16px; }
 
@@ -24,7 +24,7 @@
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
 
-    /* â”€â”€ NAV â”€â”€ */
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -77,7 +77,7 @@
     }
     .nav-links .nav-cta:hover { background: #fff; color: #0a0f0a; }
 
-    /* â”€â”€ HERO â”€â”€ */
+    /* ── HERO ── */
     .hero {
       position: relative;
       min-height: 100vh;
@@ -198,14 +198,14 @@
     }
     .btn-ghost:hover { border-color: rgba(232,237,232,0.7); background: rgba(232,237,232,0.05); }
 
-    /* â”€â”€ SECTION DIVIDER â”€â”€ */
+    /* ── SECTION DIVIDER ── */
     .divider {
       width: 100%;
       height: 1px;
       background: rgba(255,255,255,0.07);
     }
 
-    /* â”€â”€ GET INVOLVED &mdash; 3-col cards (Squarespace style) â”€â”€ */
+    /* ── GET INVOLVED &mdash; 3-col cards (Squarespace style) ── */
     .get-involved {
       position: relative;
       background-image: url('images/bg-microscopy.jpg');
@@ -292,7 +292,7 @@
     }
     .card-btn:hover { border-color: #e8ede8; color: #fff; }
 
-    /* â”€â”€ DARK BAND &mdash; about text â”€â”€ */
+    /* ── DARK BAND &mdash; about text ── */
     .about-band {
       background: #070c07;
       padding: 7rem 3rem;
@@ -331,7 +331,7 @@
       filter: brightness(0.9);
     }
 
-    /* â”€â”€ VALUES STRIP â”€â”€ */
+    /* ── VALUES STRIP ── */
     .values-strip {
       background: #0d120d;
       border-top: 1px solid rgba(255,255,255,0.06);
@@ -373,7 +373,7 @@
       line-height: 1.6;
     }
 
-    /* â”€â”€ ART GALLERY â”€â”€ */
+    /* ── ART GALLERY ── */
     .gallery-section {
       background: #070c07;
       padding: 7rem 3rem;
@@ -403,7 +403,7 @@
     }
     .gallery-item:hover img { transform: scale(1.04); filter: saturate(1.1); }
 
-    /* â”€â”€ LAB PHOTOS â”€â”€ */
+    /* ── LAB PHOTOS ── */
     .lab-section {
       background: #0a0f0a;
       padding: 7rem 3rem;
@@ -434,7 +434,7 @@
     .lab-item.span2 img { aspect-ratio: 16/9; }
     .lab-item:hover img { transform: scale(1.03); filter: brightness(1); }
 
-    /* â”€â”€ FOOTER CTA â”€â”€ */
+    /* ── FOOTER CTA ── */
     .footer-cta {
       background: #0d120d;
       border-top: 1px solid rgba(255,255,255,0.07);
@@ -466,7 +466,7 @@
       flex-wrap: wrap;
     }
 
-    /* â”€â”€ FOOTER â”€â”€ */
+    /* ── FOOTER ── */
     footer {
       background: #060b06;
       border-top: 1px solid rgba(255,255,255,0.06);
@@ -501,7 +501,7 @@
     }
     footer .footer-links a:hover { color: rgba(232,237,232,0.7); }
 
-    /* â”€â”€ RESPONSIVE â”€â”€ */
+    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { gap: 1.5rem; }
@@ -769,14 +769,15 @@
 
 <!-- FOOTER -->
   <footer>
-    <span class="footer-brand">biopunk</span>
+    <a class="footer-brand" href="index.html">biopunk</a>
     <ul class="footer-links">
       <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
-      <li><a href="https://frontiertower.io/apply" target="_blank" rel="noopener">Membership</a></li>
+      <li><a href="membership.html">Membership</a></li>
+      <li><a href="community.html">Community</a></li>
       <li><a href="https://opencollective.com/biopunk" target="_blank" rel="noopener">Donate</a></li>
       <li><a href="https://biopunk.house" target="_blank" rel="noopener">Biopunk House</a></li>
     </ul>
-    <span style="font-size:0.72rem; color:rgba(232,237,232,0.25); letter-spacing:0.05em;">Â© 2026 Biopunk Â· San Francisco, CA</span>
+    <span style="font-size:0.72rem; color:rgba(232,237,232,0.25); letter-spacing:0.05em;">&copy; 2026 Biopunk &middot; San Francisco, CA</span>
   </footer>
 
 </body>
