@@ -578,6 +578,8 @@
     .step-n { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: #ccff00; letter-spacing: 0.08em; padding-top: 0.75rem; margin-bottom: 0.6rem; border-top: 1px solid rgba(204,255,0,0.3); }
     .step h3 { font-size: 1.05rem; font-weight: 600; color: #e8ede8; margin-bottom: 0.4rem; }
     .step p { font-size: 0.85rem; color: rgba(232,237,232,0.55); line-height: 1.55; }
+    .step-link { display: inline-block; margin-top: 0.7rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #ccff00; }
+    .step-link:hover { color: #fff; }
     .join-cta { margin-top: 3rem; }
 
     .safety-sec { background: #0a0f0a; }
@@ -618,7 +620,7 @@
       <li><a href="community.html">Community</a></li>
       <li><a href="https://lu.ma/biopunk" target="_blank" rel="noopener">Events &amp; News</a></li>
       <li><a href="global-map.html">Global Map</a></li>
-      <li><a href="faq.html">FAQ</a></li><li><a href="apply.html" class="nav-cta">Apply</a></li>
+      <li><a href="faq.html">FAQ</a></li><li><a href="https://forms.gle/YvuFR3V7wQvTSk4h8" target="_blank" rel="noopener" class="nav-cta">Apply</a></li>
     </ul>
   </nav>
 
@@ -700,15 +702,14 @@
       <p class="section-eyebrow">How it works</p>
       <h2 class="section-heading">From application to <strong>bench.</strong></h2>
       <div class="steps">
-        <div class="step"><div class="step-n">01</div><h3>Apply</h3><p>A short form: who you are, what you want to build, and your experience level. About two minutes.</p></div>
-        <div class="step"><div class="step-n">02</div><h3>Meet &amp; tour</h3><p>Our lab manager reaches out to talk through your project and walk you through the space. Reviewed on a rolling basis.</p></div>
-        <div class="step"><div class="step-n">03</div><h3>Sign &amp; set up</h3><p>Sign the membership agreement, pick your tier, and start your recurring membership.</p></div>
-        <div class="step"><div class="step-n">04</div><h3>Safety onboarding</h3><p>Complete BSL-1 orientation and get your project approved. Quick, required, and what keeps the lab open.</p></div>
-        <div class="step"><div class="step-n">05</div><h3>Get your badge</h3><p>Access, equipment booking, and the community channel. You are in. Go build.</p></div>
+        <div class="step"><div class="step-n">01</div><h3>Be a tower member</h3><p>Biopunk Lab lives inside Frontier Tower. Start with a Frontier Tower membership to get into the building.</p><a class="step-link" href="https://frontiertower.io/apply" target="_blank" rel="noopener">Join Frontier Tower &rarr;</a></div>
+        <div class="step"><div class="step-n">02</div><h3>Apply for lab membership</h3><p>Tell us who you are, what you want to build, and your experience level. Takes a couple of minutes.</p><a class="step-link" href="https://forms.gle/YvuFR3V7wQvTSk4h8" target="_blank" rel="noopener">Open the application &rarr;</a></div>
+        <div class="step"><div class="step-n">03</div><h3>Review &amp; safety quiz</h3><p>We review your project and you pass a short BSL-1 safety quiz. Once approved, you are cleared for the bench.</p></div>
+        <div class="step"><div class="step-n">04</div><h3>Pay for lab membership</h3><p>Set up your recurring lab membership to activate bench access and equipment booking.</p><a class="step-link" href="https://opencollective.com/biopunk" target="_blank" rel="noopener">Set up membership &rarr;</a></div>
+        <div class="step"><div class="step-n">05</div><h3>Onboard your materials</h3><p>Log your samples and reagents against our inventory and get them approved. Then you are in &mdash; go build.</p></div>
       </div>
       <div class="join-cta">
-        <!-- MERGE NOTE: points to Frontier Tower's apply flow. Swap to a dedicated Biopunk intake (Airtable/Typeform) for a Biopunk-specific funnel, the way Genspace and BUGSS run their own forms. -->
-        <a href="apply.html" class="btn btn-light">Apply for membership</a>
+        <a href="https://forms.gle/YvuFR3V7wQvTSk4h8" target="_blank" rel="noopener" class="btn btn-light">Apply for lab membership</a>
       </div>
     </div>
   </section>
@@ -747,8 +748,8 @@
         <span class="equip-tag">-20&deg;C / -80&deg;C freezers</span>
         <span class="equip-tag">Autoclave</span>
         <span class="equip-tag">Spectrophotometer</span>
-        <span class="equip-tag ph">[confirm full inventory]</span>
       </div>
+      <p class="tier-note" style="margin-top:1.5rem;">This is a snapshot &mdash; see the <a href="https://docs.google.com/spreadsheets/d/1l-tubEKUB8-URp2wi5zr_gIcaEQVDrW57DBD8lz0Tig/edit?gid=0#gid=0" target="_blank" rel="noopener">full, live equipment inventory</a> for everything you can book.</p>
     </div>
   </section>
 
