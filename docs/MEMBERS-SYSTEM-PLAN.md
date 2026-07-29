@@ -31,20 +31,26 @@ Airtable is the **operations database only** — never the auth or payment store
 ## Airtable base
 Base: **Biopunk Lab — Membership Applications** (`apptZ7B4jQNIl5cOY`).
 
-Existing:
-- **Applications** — full membership application (bio, proposed project, safety plan,
-  equipment, reagents, protocol, application status, reviewer notes). Rich; keep as-is.
+Table IDs:
+- **Applications** `tblCgHuXQopd4BBbw` — full membership application (bio, proposed project,
+  safety plan, equipment, reagents, protocol, application status, reviewer notes). Existing.
+- **Members** `tblV9XDrpIJ6QY78i` — name, email (auth join key), Tiers (Tower/BSL-1/Tissue
+  Culture), Status, Stripe Customer ID, Join Date, Headshot, Bio, Links, Publish to site;
+  onboarding checkboxes (Tower member, Applied, Review passed, Safety quiz passed, Paid,
+  Materials onboarded); link → Applications.
+- **Certifications** `tblef01LGmYm8RpjQ` — Member, Type (BSL-1/Tissue Culture/Equipment),
+  Score, Date earned, Expiry.
+- **Reagent Orders** `tblIyg4or9d1MpAaU` — Item, Member, Quantity, Link,
+  Status (Requested→Approved→Ordered→Received/Denied), Needed by, Notes.
+- **Projects** `tblQ6oCgn8ofT5bKF` — Title, Lead (→ Members), Blurb, Tags, Status, Image,
+  Publish to site.
 
-To add in Phase 0:
-- **Members** — approved people. name, email (auth join key), tier(s), status,
-  Stripe customer id, join date, headshot, bio, publish-to-site?; link → Applications.
-- **Onboarding** — per member checklist: tower member, applied, review passed,
-  safety quiz passed, paid, materials onboarded; link → Members.
-- **Certifications** — member, type (BSL-1, tissue culture), score, date earned, expiry;
-  link → Members.
-- **Reagent Orders** — member, item, qty, link, status (requested→approved→ordered→received),
-  needed-by, notes; link → Members.
-- **Projects** — title, lead (→ Members), blurb, tags, status, image, publish-to-site?
+(Onboarding folded into Members as checkboxes.)
+
+## Phase 0 status
+- [x] Members, Certifications, Reagent Orders, Projects tables created + linked.
+- [ ] Applications **Form view** created + shared (Airtable UI step) → repoint site Apply links to it.
+- [ ] Transactional email set up for hello@biopunklab.com (Resend/Postmark + DNS).
 
 ## Workflows (item 1)
 - **Application:** Airtable Form view on Applications (decide: replace the Google Form).
