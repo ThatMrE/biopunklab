@@ -610,11 +610,26 @@
     @media (prefers-reduced-motion: reduce) { .hero-float { animation: none !important; } }
 
   </style>
+<style id="mobile-menu">
+  .nav-toggle{display:none;background:none;border:0;color:#ccff00;font-size:1.6rem;line-height:1;cursor:pointer;padding:.15rem .4rem}
+  @media (max-width:600px){
+    .nav-toggle{display:inline-flex;align-items:center;justify-content:center}
+    .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;
+      background:rgba(10,15,10,.98);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.08);padding:.4rem 1.25rem 1rem;display:none}
+    nav.open .nav-links{display:flex}
+    .nav-links li{display:block!important;width:100%;border-top:1px solid rgba(255,255,255,.06)}
+    .nav-links li:first-child{border-top:0}
+    .nav-links a{display:block;padding:.95rem .25rem;font-size:.85rem}
+    .nav-links .nav-cta{text-align:center;margin-top:.7rem;padding:.9rem}
+  }
+</style>
 </head>
 <body>
 
 <nav>
     <span class="nav-wordmark">biopunk</span>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">&#9776;</button>
     <ul class="nav-links">
       <li><a href="tour-the-lab.html">Tour the Lab</a></li>
       <li><a href="membership.html" class="active">Membership</a></li>
@@ -780,6 +795,13 @@
     <span style="font-size:0.72rem; color:rgba(232,237,232,0.25); letter-spacing:0.05em;">&copy; 2026 Biopunk &middot; San Francisco, CA</span>
   </footer>
 
+<script>
+(function(){var n=document.querySelector('nav'),t=n&&n.querySelector('.nav-toggle');if(!t)return;
+t.addEventListener('click',function(e){e.stopPropagation();var o=n.classList.toggle('open');t.setAttribute('aria-expanded',o);});
+n.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('open');t.setAttribute('aria-expanded','false');});});
+document.addEventListener('click',function(e){if(n.classList.contains('open')&&!n.contains(e.target)){n.classList.remove('open');t.setAttribute('aria-expanded','false');}});
+})();
+</script>
 </body>
 </html>
 
