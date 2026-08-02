@@ -631,17 +631,35 @@
 
   </style>
 <style id="mobile-menu">
-  .nav-toggle{display:none;background:none;border:0;color:#ccff00;font-size:1.6rem;line-height:1;cursor:pointer;padding:.15rem .4rem}
+  .nav-toggle{display:none;background:none;border:0;color:#ccff00;font-size:1.5rem;line-height:1;cursor:pointer;padding:.2rem .45rem;transition:transform .28s cubic-bezier(.4,0,.2,1),color .2s}
+  .nav-toggle:hover{color:#fff}
+  nav.open .nav-toggle{transform:rotate(90deg)}
   @media (max-width:600px){
     .nav-toggle{display:inline-flex;align-items:center;justify-content:center}
     .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;
       background:rgba(10,15,10,.98);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(255,255,255,.08);padding:.4rem 1.25rem 1rem;display:none}
-    nav.open .nav-links{display:flex}
-    .nav-links li{display:block!important;width:100%;border-top:1px solid rgba(255,255,255,.06)}
+      border-bottom:1px solid rgba(255,255,255,.08);padding:.4rem 1.25rem 1rem;
+      opacity:0;visibility:hidden;transform:translateY(-10px);pointer-events:none;
+      transition:opacity .24s ease,transform .24s ease,visibility 0s linear .24s}
+    nav.open .nav-links{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;
+      transition:opacity .24s ease,transform .24s ease,visibility 0s}
+    .nav-links li{display:block!important;width:100%;border-top:1px solid rgba(255,255,255,.06);
+      opacity:0;transform:translateY(-6px);transition:opacity .3s ease,transform .3s ease}
     .nav-links li:first-child{border-top:0}
+    nav.open .nav-links li{opacity:1;transform:translateY(0)}
+    nav.open .nav-links li:nth-child(1){transition-delay:.04s}
+    nav.open .nav-links li:nth-child(2){transition-delay:.07s}
+    nav.open .nav-links li:nth-child(3){transition-delay:.10s}
+    nav.open .nav-links li:nth-child(4){transition-delay:.13s}
+    nav.open .nav-links li:nth-child(5){transition-delay:.16s}
+    nav.open .nav-links li:nth-child(6){transition-delay:.19s}
+    nav.open .nav-links li:nth-child(7){transition-delay:.22s}
+    nav.open .nav-links li:nth-child(8){transition-delay:.25s}
     .nav-links a{display:block;padding:.95rem .25rem;font-size:.85rem}
     .nav-links .nav-cta{text-align:center;margin-top:.7rem;padding:.9rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .nav-toggle,.nav-links,.nav-links li{transition:none!important}
   }
 </style>
 </head>
@@ -731,9 +749,11 @@
 
 <script>
 (function(){var n=document.querySelector('nav'),t=n&&n.querySelector('.nav-toggle');if(!t)return;
-t.addEventListener('click',function(e){e.stopPropagation();var o=n.classList.toggle('open');t.setAttribute('aria-expanded',o);});
-n.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('open');t.setAttribute('aria-expanded','false');});});
-document.addEventListener('click',function(e){if(n.classList.contains('open')&&!n.contains(e.target)){n.classList.remove('open');t.setAttribute('aria-expanded','false');}});
+function set(o){n.classList.toggle('open',o);t.setAttribute('aria-expanded',o);t.innerHTML=o?'&#10005;':'&#9776;';}
+t.addEventListener('click',function(e){e.stopPropagation();set(!n.classList.contains('open'));});
+n.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('click',function(){set(false);});});
+document.addEventListener('click',function(e){if(n.classList.contains('open')&&!n.contains(e.target))set(false);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&n.classList.contains('open'))set(false);});
 })();
 </script>
 </body>
